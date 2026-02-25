@@ -26,6 +26,7 @@ const mainConfig = {
             jsc: {
               parser: {
                 syntax: 'typescript',
+                decorators: true,
               },
               target: 'es2020',
             },

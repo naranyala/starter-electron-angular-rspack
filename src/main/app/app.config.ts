@@ -5,11 +5,11 @@
  * Configuration can be loaded from external JSON files or provided programmatically.
  * 
  * Usage:
- *   import { DEFAULT_CONFIG } from './app.config.js';
+ *   import { DEFAULT_CONFIG } from './app.config';
  *   const config = { ...DEFAULT_CONFIG, devTools: false };
  */
 
-import { LogLevel } from '../services/logger.service.js';
+import { LogLevel } from '../services/logger.service';
 
 /**
  * Window configuration

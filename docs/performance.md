@@ -1,350 +1,152 @@
-# Performance Optimization
+# Performance
+
+Performance optimization guide.
 
 ## Build Performance
 
-### Rspack Advantages
+### Rspack Optimization
 
-This project leverages Rspack for significantly improved build performance:
+Rspack provides fast builds:
 
-- **Faster Builds**: 10x faster than traditional Webpack
-- **Incremental Compilation**: Sub-second rebuilds during development
-- **Optimized Caching**: Intelligent caching mechanisms
-- **Parallel Processing**: Efficient resource utilization
+- Sub-second build times
+- Incremental compilation
+- Efficient caching
 
-### Build Time Benchmarks
+### Angular Optimization
 
-**Development Mode (M2 MacBook Air)**:
-- Initial build: ~2s
-- Incremental builds: <500ms
-- Hot Module Replacement: <300ms
+Angular CLI optimizations:
 
-**Production Build**:
-- Total build time: ~3s
-- Bundle optimization: Automatic minification and tree-shaking
+- AOT compilation
+- Tree shaking
+- Bundle optimization
 
 ## Runtime Performance
 
-### Bundle Size Optimization
+### Main Process
 
-- **Renderer Bundle**: ~150KB (minified and compressed)
-- **Main Process**: ~50KB (minified and compressed)
-- **Total Footprint**: Under 200KB for core application
+Optimize main process:
 
-### Memory Management
+1. Lazy load services
+2. Use efficient data structures
+3. Minimize IPC calls
+4. Cache frequently used data
 
-#### Efficient Data Structures
+### Frontend
 
-Use appropriate data structures for optimal performance:
+Optimize frontend:
+
+1. Use OnPush change detection
+2. Lazy load modules
+3. Optimize bundle size
+4. Use signals for reactivity
+
+## Memory Management
+
+### Main Process
 
 ```typescript
-// ✅ Use Map for frequent lookups
-const cache = new Map<string, any>();
-
-// ✅ Use Set for unique collections
-const uniqueItems = new Set<string>();
-
-// ✅ Use WeakMap for private data
-const privateData = new WeakMap<object, any>();
+// Clean up resources
+app.on('will-quit', () => {
+  windows.closeAll();
+  container.dispose();
+});
 ```
 
-#### Garbage Collection
-
-Implement proper cleanup to prevent memory leaks:
+### Frontend
 
 ```typescript
-class ComponentManager {
-  private disposables: Array<() => void> = [];
-  
-  registerDisposable(fn: () => void) {
-    this.disposables.push(fn);
-  }
-  
-  destroy() {
-    // Cleanup all registered disposables
-    this.disposables.forEach(fn => fn());
-    this.disposables = [];
-  }
+// Clean up subscriptions
+ngOnDestroy() {
+  this.unsubscribe.forEach(fn => fn());
 }
+```
+
+## Bundle Size
+
+### Reduce Bundle Size
+
+1. Remove unused dependencies
+2. Use tree shaking
+3. Lazy load features
+4. Optimize imports
+
+### Analyze Bundle
+
+```bash
+# Install analyzer
+npm install -g webpack-bundle-analyzer
+
+# Analyze build
+webpack-bundle-analyzer dist/stats.json
 ```
 
 ## IPC Performance
 
-### Efficient Communication
+### Optimize IPC
 
-Optimize IPC communication for minimal overhead:
+1. Batch IPC calls
+2. Use efficient serialization
+3. Minimize payload size
+4. Cache results when possible
 
-```typescript
-// ✅ Batch multiple operations
-ipc.register('batch-operation', async (event, operations) => {
-  const results = await Promise.all(
-    operations.map(op => processOperation(op))
-  );
-  return results;
-});
-
-// ❌ Avoid multiple small calls
-// operations.forEach(op => processOperation(op));
-```
-
-### Data Serialization
-
-Minimize data transferred between processes:
+### Example
 
 ```typescript
-// ✅ Send only necessary data
-const minimalData = {
-  id: item.id,
-  name: item.name
-  // Exclude heavy properties
-};
-
-// ❌ Sending entire objects
-// window.electronAPI.invoke('action', heavyObject);
-```
-
-## Rendering Performance
-
-### DOM Manipulation
-
-Optimize DOM operations for smooth UI:
-
-```typescript
-// ✅ Batch DOM updates
-const fragment = document.createDocumentFragment();
-items.forEach(item => {
-  const element = createElement(item);
-  fragment.appendChild(element);
-});
-container.appendChild(fragment);
-
-// ✅ Use requestAnimationFrame for animations
-function animate() {
-  // Update positions
-  requestAnimationFrame(animate);
-}
-requestAnimationFrame(animate);
-```
-
-### Virtual Scrolling
-
-For large datasets, implement virtual scrolling:
-
-```typescript
-class VirtualList {
-  private visibleRange: { start: number; end: number };
-  
-  updateVisibleRange() {
-    // Calculate visible items based on scroll position
-    // Only render visible items
-  }
-}
-```
-
-## Caching Strategies
-
-### Application-Level Caching
-
-Implement strategic caching to improve responsiveness:
-
-```typescript
-class CacheManager {
-  private cache = new Map<string, { data: any; timestamp: number }>();
-  private ttl = 5 * 60 * 1000; // 5 minutes
-  
-  get<T>(key: string): T | null {
-    const cached = this.cache.get(key);
-    if (!cached) return null;
-    
-    if (Date.now() - cached.timestamp > this.ttl) {
-      this.cache.delete(key);
-      return null;
-    }
-    
-    return cached.data as T;
-  }
-  
-  set<T>(key: string, data: T) {
-    this.cache.set(key, { data, timestamp: Date.now() });
-  }
-}
-```
-
-### File System Caching
-
-Cache frequently accessed files:
-
-```typescript
-class FileCache {
-  private fileCache = new Map<string, { content: string; mtime: number }>();
-  
-  async readFileWithCache(filePath: string): Promise<string> {
-    const stat = await fs.promises.stat(filePath);
-    const cached = this.fileCache.get(filePath);
-    
-    if (cached && cached.mtime >= stat.mtime) {
-      return cached.content;
-    }
-    
-    const content = await fs.promises.readFile(filePath, 'utf-8');
-    this.fileCache.set(filePath, { content, mtime: stat.mtime });
-    return content;
-  }
-}
-```
-
-## Asynchronous Operations
-
-### Concurrency Control
-
-Manage concurrent operations to prevent resource exhaustion:
-
-```typescript
-class ConcurrencyLimiter {
-  private running = 0;
-  private maxConcurrency = 5;
-  private queue: Array<() => void> = [];
-  
-  async execute<T>(fn: () => Promise<T>): Promise<T> {
-    if (this.running >= this.maxConcurrency) {
-      return new Promise<T>(resolve => {
-        this.queue.push(() => this.execute(fn).then(resolve));
-      });
-    }
-    
-    this.running++;
-    try {
-      return await fn();
-    } finally {
-      this.running--;
-      if (this.queue.length > 0) {
-        this.queue.shift()?.();
-      }
-    }
-  }
-}
-```
-
-### Debouncing and Throttling
-
-Optimize frequent operations:
-
-```typescript
-// Debounce expensive operations
-function debounce<T extends (...args: any[]) => any>(
-  func: T,
-  wait: number
-): (...args: Parameters<T>) => void {
-  let timeout: NodeJS.Timeout;
-  return function executedFunction(...args: Parameters<T>) {
-    const later = () => {
-      clearTimeout(timeout);
-      func(...args);
-    };
-    clearTimeout(timeout);
-    timeout = setTimeout(later, wait);
-  };
+// Bad: Multiple IPC calls
+for (const item of items) {
+  await ipcRenderer.invoke('process:item', item);
 }
 
-// Throttle for rate limiting
-function throttle<T extends (...args: any[]) => any>(
-  func: T,
-  limit: number
-): (...args: Parameters<T>) => void {
-  let inThrottle: boolean;
-  return function executedFunction(...args: Parameters<T>) {
-    if (!inThrottle) {
-      func(...args);
-      inThrottle = true;
-      setTimeout(() => inThrottle = false, limit);
-    }
-  };
-}
+// Good: Batch IPC call
+await ipcRenderer.invoke('process:items', items);
 ```
 
-## Memory Profiling
+## Loading Performance
 
-### Identifying Bottlenecks
+### Initial Load
 
-Use Electron's built-in profiling tools:
+1. Show loading screen
+2. Load essential resources first
+3. Defer non-critical operations
+4. Use skeleton screens
 
-```typescript
-// Profile memory usage
-function profileMemory() {
-  const used = process.memoryUsage();
-  console.log({
-    rss: `${Math.round(used.rss / 1024 / 1024)} MB`,
-    heapTotal: `${Math.round(used.heapTotal / 1024 / 1024)} MB`,
-    heapUsed: `${Math.round(used.heapUsed / 1024 / 1024)} MB`,
-    external: `${Math.round(used.external / 1024 / 1024)} MB`
-  });
-}
-```
+### Runtime
 
-## Performance Monitoring
+1. Lazy load features
+2. Prefetch likely needed data
+3. Cache frequently accessed data
+4. Use web workers for heavy tasks
 
-### Built-in Metrics
+## Monitoring
 
-Track performance metrics:
+### Performance Metrics
 
-```typescript
-class PerformanceTracker {
-  private marks = new Map<string, number>();
-  
-  mark(name: string) {
-    this.marks.set(name, performance.now());
-  }
-  
-  measure(startMark: string, endMark: string, description: string) {
-    const start = this.marks.get(startMark);
-    const end = this.marks.get(endMark);
-    
-    if (start !== undefined && end !== undefined) {
-      const duration = end - start;
-      console.log(`${description}: ${duration.toFixed(2)}ms`);
-    }
-  }
-}
-```
+Track:
 
-## Optimization Checklist
+- Build times
+- Bundle sizes
+- Memory usage
+- IPC latency
+- Frame rate
 
-### Before Release
+### DevTools
 
-- [ ] Run production build and verify bundle size
-- [ ] Profile memory usage during typical operations
-- [ ] Test performance on minimum supported hardware
-- [ ] Verify IPC operations are efficient
-- [ ] Check for memory leaks in long-running operations
-- [ ] Optimize images and assets
-- [ ] Enable compression for network requests
+Use DevTools to:
 
-### Development Optimization
+1. Profile performance
+2. Identify bottlenecks
+3. Monitor memory
+4. Analyze network requests
 
-- [ ] Use development builds for debugging
-- [ ] Enable verbose logging to identify bottlenecks
-- [ ] Monitor build times and optimize slow operations
-- [ ] Use efficient data structures for development tools
-- [ ] Implement hot module replacement properly
+## Best Practices
 
-## Tools and Profiling
+1. Measure before optimizing
+2. Profile regularly
+3. Optimize critical path first
+4. Test on target hardware
+5. Monitor in production
 
-### Built-in Tools
+## Related Documentation
 
-- **Chrome DevTools**: For renderer process profiling
-- **Node.js Profiler**: For main process analysis
-- **Electron Fiddle**: For isolated performance testing
-- **Rspack Stats**: For bundle analysis
-
-### Performance Budgets
-
-Set performance targets:
-
-```json
-{
-  "performanceBudget": {
-    "maxBundleSize": "200kB",
-    "maxInitialRequests": 5,
-    "maxAssetSize": "1MB"
-  }
-}
-```
+- Building - Build process
+- Development - Development workflow

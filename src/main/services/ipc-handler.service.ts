@@ -1,7 +1,7 @@
 import { type BrowserWindow, dialog, type IpcMainInvokeEvent, ipcMain } from 'electron';
-import { container, Injectable } from '../di/index.js';
-import { LoggerService } from './logger.service.js';
-import { WindowService } from './window.service.js';
+import { container, Injectable } from '../di/index';
+import { LoggerService } from './logger.service';
+import { WindowService } from './window.service';
 
 interface MessageOptions {
   type: 'none' | 'info' | 'warning' | 'error' | 'question';

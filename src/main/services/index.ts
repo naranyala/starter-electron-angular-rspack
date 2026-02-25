@@ -1,18 +1,18 @@
 export {
   IpcHandlerService,
   ipcHandlerService,
-} from './ipc-handler.service.js';
+} from './ipc-handler.service';
 export {
   type LogEntry,
   type LoggerConfig,
   LoggerService,
   LogLevel,
   loggerService,
-} from './logger.service.js';
+} from './logger.service';
 
 export {
   type WindowOptions,
   WindowService,
   type WindowState,
   windowService,
-} from './window.service.js';
+} from './window.service';

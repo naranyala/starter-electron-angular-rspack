@@ -75,7 +75,7 @@ export class WindowManager {
       webSecurity: true,
       allowRunningInsecureContent: false,
       experimentalFeatures: false,
-      preload: path.join(__dirname, '../preload/preload.js'),
+      preload: path.join(__dirname, '../preload/preload'),
     };
   }
 

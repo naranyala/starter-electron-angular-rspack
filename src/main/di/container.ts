@@ -4,12 +4,12 @@
  * with automatic dependency resolution
  */
 
-import type { Provider, ServiceDecoratorOptions, Token } from './tokens.js';
+import type { Provider, ServiceDecoratorOptions, Token } from './tokens';
 import {
   getInjectableMetadata,
   getConstructorDependencies,
   getInjectTokens,
-} from './tokens.js';
+} from './tokens';
 
 interface ResolvedProvider<T> {
   instance?: T;

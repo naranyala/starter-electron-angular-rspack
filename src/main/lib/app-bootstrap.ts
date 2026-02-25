@@ -3,10 +3,10 @@
  * Configures and initializes the DI container with all services
  */
 
-import { container, ServiceRegistry, type ServiceMeta } from '../di/index.js';
-import { LoggerService, LogLevel, type LoggerConfig } from '../services/logger.service.js';
-import { WindowService } from '../services/window.service.js';
-import { IpcHandlerService } from '../services/ipc-handler.service.js';
+import { container, ServiceRegistry, type ServiceMeta } from '../di/index';
+import { LoggerService, LogLevel, type LoggerConfig } from '../services/logger.service';
+import { WindowService } from '../services/window.service';
+import { IpcHandlerService } from '../services/ipc-handler.service';
 
 /**
  * Application configuration interface

@@ -5,18 +5,18 @@
  * Encapsulates the complexity of the DI container and service orchestration.
  * 
  * Usage:
- *   import { appFacade } from './app.facade.js';
+ *   import { appFacade } from './app.facade';
  *   
  *   await appFacade.initialize();
  *   appFacade.windows.create({...});
  */
 
 import type { BrowserWindow } from 'electron';
-import { container } from '../di/index.js';
-import { LoggerService } from '../services/logger.service.js';
-import { WindowService } from '../services/window.service.js';
-import { IpcHandlerService } from '../services/ipc-handler.service.js';
-import type { AppConfig } from './app.config.js';
+import { container } from '../di/index';
+import { LoggerService } from '../services/logger.service';
+import { WindowService } from '../services/window.service';
+import { IpcHandlerService } from '../services/ipc-handler.service';
+import type { AppConfig } from './app.config';
 
 /**
  * Window management API through facade
@@ -115,14 +115,26 @@ export class AppFacade {
     }
 
     this._config = config || null;
-    this.logger.info('app', 'Application initializing', { 
-      environment: config?.environment || 'unknown' 
-    });
-
+    
     try {
+      // Create and register services manually to ensure proper dependency order
+      const logger = new LoggerService();
+      this.appContainer.registerValue(LoggerService, logger);
+      
+      const windowService = new WindowService(logger);
+      this.appContainer.registerValue(WindowService, windowService);
+      
+      const ipcHandler = new IpcHandlerService(logger, windowService);
+      this.appContainer.registerValue(IpcHandlerService, ipcHandler);
+      
+      // Now initialize
+      this.logger.info('app', 'Application initializing', {
+        environment: config?.environment || 'unknown'
+      });
+
       // Register IPC handlers
       this.ipc.registerHandlers();
-      
+
       this._initialized = true;
       this.logger.info('app', 'Application initialized successfully');
     } catch (error) {

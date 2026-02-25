@@ -1,5 +1,5 @@
 import { type BrowserWindow, type IpcMainInvokeEvent, ipcMain } from 'electron';
-import { container, Injectable } from '../di/index.js';
+import { container, Injectable } from '../di/index';
 
 export enum LogLevel {
   DEBUG = 'DEBUG',

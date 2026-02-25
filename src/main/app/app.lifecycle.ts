@@ -4,14 +4,15 @@
  * Manages Electron app lifecycle events with proper cleanup.
  * 
  * Usage:
- *   import { lifecycleHandlers } from './app.lifecycle.js';
+ *   import { lifecycleHandlers } from './app.lifecycle';
  *   
  *   lifecycleHandlers.register(app);
  */
 
 import { app, type BrowserWindow } from 'electron';
-import { appFacade } from './app.facade.js';
-import { getLogger } from '../services/logger.service.js';
+import { appFacade } from './app.facade';
+import { LoggerService } from '../services/logger.service';
+import { container } from '../di/index';
 
 /**
  * Lifecycle event handlers
@@ -33,9 +34,12 @@ export interface LifecycleHandlers {
  * Application lifecycle manager
  */
 class LifecycleManager {
-  private readonly logger = getLogger('lifecycle');
   private mainWindow: BrowserWindow | null = null;
   private isQuitting = false;
+
+  private get logger() {
+    return container.resolve(LoggerService);
+  }
 
   /**
    * Register lifecycle handlers with Electron app

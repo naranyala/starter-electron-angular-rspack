@@ -18,9 +18,9 @@
             "browser": "src/main.ts",
             "polyfills": ["zone.js"],
             "tsConfig": "tsconfig.app.json",
-            "assets": ["src/favicon.ico", "src/assets"],
+            "assets": ["src/favicon.ico"],
             "styles": ["src/styles.css"],
-            "scripts": ["node_modules/winbox/dist/winbox.bundle.min.js"]
+            "scripts": []
           },
           "configurations": {
             "production": {

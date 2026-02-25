@@ -3,8 +3,8 @@
  * Provides automatic service discovery and registration
  */
 
-import type { Container } from '../di/container.js';
-import type { Token } from '../di/tokens.js';
+import type { Container } from '../di/container';
+import type { Token } from '../di/tokens';
 
 /**
  * Service metadata for registry

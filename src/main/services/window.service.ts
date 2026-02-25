@@ -1,7 +1,7 @@
 import * as path from 'node:path';
 import { BrowserWindow, screen } from 'electron';
-import { container, Injectable } from '../di/index.js';
-import { LoggerService } from './logger.service.js';
+import { container, Injectable } from '../di/index';
+import { LoggerService } from './logger.service';
 
 export interface WindowOptions {
   id?: string;
@@ -58,7 +58,7 @@ export class WindowService {
       contextIsolation: true,
       sandbox: true,
       webSecurity: true,
-      preload: path.join(process.cwd(), 'src/preload/index.js'),
+      preload: path.join(process.cwd(), 'src/preload/index'),
     };
 
     const mergedOptions = {

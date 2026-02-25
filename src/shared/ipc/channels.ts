@@ -67,6 +67,18 @@ export const IPC_CHANNELS = {
     GET_HISTORY: 'error:get-history',
     CLEAR_HISTORY: 'error:clear-history',
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // EVENT BUS
+  // ═══════════════════════════════════════════════════════════════════════════
+  EVENT: {
+    PUBLISH: 'event:publish',
+    SUBSCRIBE: 'event:subscribe',
+    UNSUBSCRIBE: 'event:unsubscribe',
+    HISTORY: 'event:history',
+    STATS: 'event:stats',
+    CLEAR: 'event:clear',
+  },
 } as const;
 
 /**

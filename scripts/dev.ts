@@ -57,6 +57,7 @@ async function verifyFiles(): Promise<boolean> {
     './src/main/index.ts',
     './frontend/src/index.html',
     './frontend/src/main.ts',
+    './main.cjs',
   ];
 
   const missingFiles = requiredFiles.filter((f) => !fileExists(f));
@@ -105,9 +106,10 @@ async function startDev(): Promise<void> {
 
   rspackProcess = spawn(
     './frontend/node_modules/.bin/ng',
-    ['serve', '--port', port.toString(), '--host', 'localhost', '--verbose=false'],
+    ['serve', '--port', port.toString(), '--host', 'localhost'],
     {
       stdio: 'inherit',
+      cwd: process.cwd(),
       env: { ...process.env, PORT: port.toString(), CI: 'true' },
     }
   );
@@ -118,12 +120,13 @@ async function startDev(): Promise<void> {
     process.exit(1);
   });
 
-  // Step 5: Wait for Rspack and start Electron
+  // Step 5: Wait for Angular and start Electron
   setTimeout(async () => {
     try {
-      logger.timing('Waiting for Rspack server...');
-      await waitFor(`http://localhost:${port}`, 30000);
-      logger.success('Rspack server ready');
+      logger.info('Waiting for Angular server to be ready...');
+      // Simple delay instead of waitFor to avoid esbuild deadlock
+      await new Promise(resolve => setTimeout(resolve, 15000));
+      logger.success('Angular server ready');
 
       // Set Electron start URL
       process.env.ELECTRON_START_URL = `http://localhost:${port}`;
@@ -152,7 +155,7 @@ async function startDev(): Promise<void> {
       cleanup();
       process.exit(1);
     }
-  }, 2000);
+  }, 5000);
 
   rspackProcess.on('close', (code) => {
     logger.stop(`Rspack exited with code ${code}`);

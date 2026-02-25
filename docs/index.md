@@ -1,52 +1,69 @@
-# Electron Vanilla TypeScript Rspack - Documentation Hub
+# Documentation Index
 
-Welcome to the comprehensive documentation for the Electron Vanilla TypeScript Rspack starter. This documentation is designed to help developers, contributors, and AI agents understand every aspect of this high-performance desktop application foundation.
+Welcome to the Electron Angular Rspack Starter documentation. This index provides access to all documentation for the project.
 
-## 📚 Documentation Sections
+## Getting Started
 
-### Getting Started
-- [Overview](./overview.md) - Introduction to the project, key features, and technology stack
-- [Development Guide](./development.md) - Complete setup and development workflow instructions
+- [Overview](./overview.md) - Project introduction and key features
+- [Architecture](./architecture.md) - System architecture and design patterns
+- [Project Structure](./project-structure.md) - Complete directory and file organization
+- [Getting Started](./getting-started.md) - Installation and setup guide
 
-### Architecture & Implementation
-- [Architecture & Design Patterns](./architecture.md) - Deep dive into the project structure and design patterns
-- [API Reference](./api-reference.md) - Complete API documentation for all components and utilities
+## Development
 
-### Production & Security
-- [Security Guidelines](./security.md) - Security architecture, configuration, and best practices
-- [Performance Optimization](./performance.md) - Performance benchmarks, optimization strategies, and monitoring
+- [Development Guide](./development.md) - Development workflow and tools
+- [Scripts Reference](./scripts-reference.md) - All available npm/bun scripts
+- [Configuration](./configuration.md) - Application configuration options
+- [Debugging](./debugging.md) - Debugging techniques and tools
 
-### Support & Troubleshooting
-- [Troubleshooting & FAQ](./troubleshooting.md) - Common issues, solutions, and frequently asked questions
+## Core Concepts
 
-## 🎯 Project Goals
+- [Dependency Injection](./dependency-injection.md) - DI system for backend and frontend
+- [Event Bus System](./event-bus.md) - Cross-process event communication
+- [Errors as Values](./errors-as-values.md) - Error handling pattern
+- [IPC Communication](./ipc-communication.md) - Inter-process communication
 
-This starter kit aims to provide:
+## Building and Deployment
 
-1. **Maximum Performance** - Leveraging Rspack for 10x faster builds
-2. **Enhanced Security** - Implementing Electron security best practices by default
-3. **Developer Experience** - Providing excellent tooling and development workflows
-4. **Scalability** - Clean architecture that grows from prototypes to enterprise applications
-5. **Type Safety** - Comprehensive TypeScript coverage with strict checking
+- [Building](./building.md) - Build process and configuration
+- [Distribution](./distribution.md) - Packaging and distribution
+- [Code Signing](./code-signing.md) - Code signing for production
+- [Auto Updates](./auto-updates.md) - Automatic update configuration
 
-## 🚀 Quick Navigation
+## Testing
 
-- **Source Code**: `/src/` - Main application code
-- **Build Configuration**: `rspack.config.cjs` - Rspack bundling setup
-- **Project Configuration**: `package.json` - Dependencies and scripts
-- **Type Definitions**: `/src/shared/types/` - Shared TypeScript interfaces
-- **Utilities**: `/src/main/lib/` and `/src/renderer/lib/` - Core utilities
+- [Testing Guide](./testing.md) - Testing strategies and frameworks
+- [Security Testing](./security-testing.md) - Security audit and testing
+- [Unit Testing](./unit-testing.md) - Unit test writing and execution
+- [E2E Testing](./e2e-testing.md) - End-to-end testing setup
 
-## 🤝 Contributing
+## Security
 
-All contributions are welcome! Please refer to the individual documentation sections for guidelines on contributing to different aspects of the project.
+- [Security Overview](./security.md) - Security features and best practices
+- [Security Audit](./security-audit.md) - Running security audits
+- [Context Isolation](./context-isolation.md) - Electron context isolation
+- [Sandbox Mode](./sandbox-mode.md) - Renderer process sandboxing
 
-## 🆘 Need Help?
+## Advanced Topics
 
-- Check the [Troubleshooting](./troubleshooting.md) section first
-- Search existing [GitHub Issues](https://github.com/naranyala/starter-rspack-electron-vanilla/issues)
-- Join the discussion on [GitHub Discussions](https://github.com/naranyala/starter-rspack-electron-vanilla/discussions)
+- [Performance Optimization](./performance.md) - Performance tuning guide
+- [Troubleshooting](./troubleshooting.md) - Common issues and solutions
+- [Migration Guide](./migration.md) - Migrating from other templates
+- [Contributing](./contributing.md) - Contribution guidelines
+
+## API Reference
+
+- [Main Process API](./api/main-process.md) - Main process API reference
+- [Frontend API](./api/frontend.md) - Frontend services and components
+- [Shared Types](./api/shared-types.md) - Shared type definitions
+- [Event Types](./api/event-types.md) - Event channel definitions
+
+## Additional Resources
+
+- [FAQ](./faq.md) - Frequently asked questions
+- [Changelog](./changelog.md) - Version history and changes
+- [License](../LICENSE) - MIT License
 
 ---
 
-*This documentation hub serves as the central reference for understanding and working with the Electron Vanilla TypeScript Rspack starter.*
+For quick access to specific topics, use the search function in your documentation viewer or refer to the individual guides listed above.

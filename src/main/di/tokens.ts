@@ -3,7 +3,7 @@
  * Provides type-safe injection tokens and service decorators
  */
 
-import type { Container } from './container.js';
+import type { Container } from './container';
 
 /**
  * Type-safe injection token for non-class dependencies

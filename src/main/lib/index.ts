@@ -9,15 +9,15 @@ export {
   appManager,
   type DialogOptions,
   type SystemInfo,
-} from './app-manager.js';
-export { FileSystemManager, fileSystem } from './filesystem.js';
-export { type IPCChannel, IPCManager, type IPCResponse, ipc } from './ipc.js';
+} from './app-manager';
+export { FileSystemManager, fileSystem } from './filesystem';
+export { type IPCChannel, IPCManager, type IPCResponse, ipc } from './ipc';
 export {
   WindowManager,
   type WindowOptions,
   type WindowState,
   windowManager,
-} from './window-manager.js';
+} from './window-manager';
 
 export {
   ConfigManager,
@@ -26,7 +26,7 @@ export {
   type ConfigOptions,
   type ConfigWatcher,
   type FeatureFlag,
-} from './config.js';
+} from './config';
 
 // Re-export commonly used Electron modules
 export const electron = {
