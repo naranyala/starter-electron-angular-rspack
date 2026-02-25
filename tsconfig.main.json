@@ -1,0 +1,16 @@
+{
+  "extends": "./tsconfig.json",
+  "compilerOptions": {
+    "outDir": "./dist",
+    "rootDir": "./src",
+    "module": "commonjs",
+    "moduleResolution": "node",
+    "target": "ES2022",
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "noEmit": false,
+    "lib": ["es2022"]
+  },
+  "include": ["src/main/**/*", "src/shared/**/*"],
+  "exclude": ["node_modules", "dist", "build", "scripts", "main.cjs", "rspack.config.cjs"]
+}

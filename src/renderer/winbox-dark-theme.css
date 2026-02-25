@@ -1,0 +1,187 @@
+/* WinBox Compact Dark Theme - Fixed */
+
+/* Main Window */
+.winbox.dark-theme {
+  background: #1e1e1e !important;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.6) !important;
+  border: 1px solid #333 !important;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+/* Header */
+.winbox.dark-theme .wb-header {
+  background: #252526 !important;
+  color: #cccccc !important;
+  height: 35px !important;
+  line-height: 35px !important;
+  border-bottom: 1px solid #333;
+}
+
+.winbox.dark-theme .wb-title {
+  font-size: 14px;
+  color: #cccccc;
+  padding-left: 10px;
+}
+
+/* Control Buttons Container */
+.winbox.dark-theme .wb-control {
+  height: 35px;
+  line-height: 35px;
+}
+
+/* Individual Control Buttons - Preserve default icons but style them */
+.winbox.dark-theme .wb-min,
+.winbox.dark-theme .wb-max,
+.winbox.dark-theme .wb-full,
+.winbox.dark-theme .wb-close {
+  width: 35px !important;
+  height: 35px !important;
+  opacity: 0.7;
+  transition: all 0.15s ease;
+}
+
+.winbox.dark-theme .wb-min:hover,
+.winbox.dark-theme .wb-max:hover,
+.winbox.dark-theme .wb-full:hover {
+  opacity: 1;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+/* Close button special styling */
+.winbox.dark-theme .wb-close:hover {
+  opacity: 1;
+  background: #c75450 !important;
+}
+
+/* Body */
+.winbox.dark-theme .wb-body {
+  background: #1e1e1e !important;
+  color: #d4d4d4 !important;
+  top: 35px !important;
+}
+
+/* Window States */
+.winbox.dark-theme.max {
+  box-shadow: none !important;
+  border: none !important;
+  left: var(--sidebar-width) !important;
+  width: calc(100% - var(--sidebar-width)) !important;
+}
+
+.winbox.dark-theme.full {
+  left: var(--sidebar-width) !important;
+  width: calc(100% - var(--sidebar-width)) !important;
+}
+
+.winbox.dark-theme.min {
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.5) !important;
+}
+
+.winbox.dark-theme.min .wb-header {
+  border-bottom: none;
+}
+
+/* Modal Overlay */
+.winbox.dark-theme.modal::after {
+  background: rgba(13, 17, 23, 0.9) !important;
+}
+
+/* Content Styling */
+.winbox-container {
+  height: 100%;
+  overflow: auto;
+}
+
+.winbox-content {
+  padding: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: #d4d4d4;
+}
+
+.winbox-content::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+
+.winbox-content::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.winbox-content::-webkit-scrollbar-thumb {
+  background: #424242;
+  border-radius: 5px;
+}
+
+.winbox-content::-webkit-scrollbar-thumb:hover {
+  background: #4f4f4f;
+}
+
+.winbox-content h3 {
+  margin: 0 0 12px 0;
+  font-size: 16px;
+  font-weight: 600;
+  color: #fff;
+  border-bottom: 1px solid #333;
+  padding-bottom: 8px;
+}
+
+.winbox-content h4 {
+  margin: 16px 0 8px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: #fff;
+}
+
+.winbox-content p {
+  margin: 0 0 12px 0;
+  color: #d4d4d4;
+}
+
+.winbox-content .lead {
+  color: #9cdcfe;
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.winbox-content ul {
+  margin: 8px 0 12px 20px;
+  padding: 0;
+}
+
+.winbox-content li {
+  margin-bottom: 6px;
+  color: #d4d4d4;
+}
+
+.winbox-content strong {
+  color: #ce9178;
+  font-weight: 600;
+}
+
+/* Resize handles */
+.winbox.dark-theme .wb-n,
+.winbox.dark-theme .wb-s,
+.winbox.dark-theme .wb-e,
+.winbox.dark-theme .wb-w,
+.winbox.dark-theme .wb-nw,
+.winbox.dark-theme .wb-ne,
+.winbox.dark-theme .wb-sw,
+.winbox.dark-theme .wb-se {
+  background: transparent;
+}
+
+/* Focus State */
+.winbox.dark-theme.focus {
+  box-shadow: 0 8px 32px rgba(0, 122, 204, 0.3) !important;
+  border-color: #007acc !important;
+}
+
+.winbox.dark-theme.focus .wb-header {
+  background: #1e1e1e !important;
+}
+
+/* No header mode */
+.winbox.dark-theme.no-header .wb-body {
+  top: 0 !important;
+}

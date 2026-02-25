@@ -1,0 +1,2294 @@
+{
+  "scanDate": "2026-02-03T15:37:29.460Z",
+  "findings": [
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/advanced-security-scanner.ts",
+      "line": 100,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "if (line.includes('eval(') || line.includes('new Function(')) {"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/advanced-security-scanner.ts",
+      "line": 107,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "description: 'Use of eval() or Function constructor detected',"
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/advanced-security-scanner.ts",
+      "line": 108,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "recommendation: 'Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.',"
+    },
+    {
+      "id": "SEC-PATH-001",
+      "severity": "high",
+      "category": "Path Traversal",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/advanced-security-scanner.ts",
+      "line": 115,
+      "description": "Potential path traversal without proper normalization",
+      "recommendation": "Use path.normalize() or path.resolve() to prevent directory traversal attacks.",
+      "codeSnippet": "if (line.includes('path.join') && (line.includes('..') || line.includes('../'))) {"
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/advanced-security-scanner.ts",
+      "line": 162,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "if (line.includes('JSON.parse') && (line.toLowerCase().includes('req.') || line.toLowerCase().includes('userinput') || line.toLowerCase().includes('data'))) {"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/advanced-security-scanner.ts",
+      "line": 177,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "if (line.includes('innerHTML') || line.includes('outerHTML') || line.includes('document.write')) {"
+    },
+    {
+      "id": "SEC-CRYPTO-001",
+      "severity": "medium",
+      "category": "Weak Cryptography",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/advanced-security-scanner.ts",
+      "line": 231,
+      "description": "Use of weak cryptographic hash functions (MD5/SHA1)",
+      "recommendation": "Use stronger hash functions like SHA-256 or SHA-3.",
+      "codeSnippet": "if (line.includes('crypto.createHash') && (line.includes('md5') || line.includes('sha1'))) {"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/advanced-security-scanner.ts",
+      "line": 246,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "if (line.includes('Math.random')) {"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/advanced-security-scanner.ts",
+      "line": 253,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "description: 'Use of Math.random() for security purposes',"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/code-analysis.ts",
+      "line": 27,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "message: 'Usage of eval() allows arbitrary code execution',"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/code-analysis.ts",
+      "line": 33,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "message: 'new Function() allows arbitrary code execution',"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/code-analysis.ts",
+      "line": 69,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "message: 'Math.random() is not cryptographically secure',"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/code-analysis.ts",
+      "line": 78,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "pattern: /innerHTML\\s*=/,"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/code-analysis.ts",
+      "line": 87,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "message: 'document.write() can lead to XSS and is deprecated',"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/code-analysis.ts",
+      "line": 246,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "message: \"CSP contains 'unsafe-eval' which allows eval() and similar\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/enhanced-security-audit.ts",
+      "line": 332,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "if (content.includes('eval(') || content.includes('new Function(')) {"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/enhanced-security-audit.ts",
+      "line": 336,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "details: `Build script ${script} contains unsafe eval() or new Function()`,"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/enhanced-security-audit.ts",
+      "line": 383,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "if (content.includes('eval(')) {"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/enhanced-security-audit.ts",
+      "line": 385,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "vulnerabilityDetails += `\\n  - eval() found in ${file}`;"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/enhanced-security-audit.ts",
+      "line": 393,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "if (content.includes('innerHTML') || content.includes('outerHTML')) {"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/enhanced-security-audit.ts",
+      "line": 396,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "vulnerabilityDetails += `\\n  - DOM manipulation with innerHTML/outerHTML found in ${file}`;"
+    },
+    {
+      "id": "SEC-PATH-001",
+      "severity": "high",
+      "category": "Path Traversal",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/enhanced-security-audit.ts",
+      "line": 400,
+      "description": "Potential path traversal without proper normalization",
+      "recommendation": "Use path.normalize() or path.resolve() to prevent directory traversal attacks.",
+      "codeSnippet": "if (content.includes('path.join') && (content.includes('..') || content.includes('../'))) {"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/security-build-pipeline.ts",
+      "line": 140,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "if (line.includes('eval(')) {"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/security-build-pipeline.ts",
+      "line": 146,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "if (line.includes('new Function(')) {"
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/security-build-pipeline.ts",
+      "line": 152,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "if (line.includes('JSON.parse') && (line.includes('req.') || line.includes('userInput'))) {"
+    },
+    {
+      "id": "SEC-PATH-001",
+      "severity": "high",
+      "category": "Path Traversal",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/security-build-pipeline.ts",
+      "line": 158,
+      "description": "Potential path traversal without proper normalization",
+      "recommendation": "Use path.normalize() or path.resolve() to prevent directory traversal attacks.",
+      "codeSnippet": "if (line.includes('path.join') && (line.includes('..') || line.includes('../')) &&"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/security-build.ts",
+      "line": 291,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "message: 'Usage of eval() is dangerous and can lead to code injection',"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/security-build.ts",
+      "line": 295,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "message: 'Usage of new Function() is dangerous and can lead to code injection',"
+    },
+    {
+      "id": "SEC-CMD-001",
+      "severity": "critical",
+      "category": "Command Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/scripts/security/security-build.ts",
+      "line": 300,
+      "description": "Potential command injection with user input",
+      "recommendation": "Avoid passing user input directly to system commands. Use parameterized queries or validation.",
+      "codeSnippet": "'Usage of child_process.exec() can lead to command injection if input is not sanitized',"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 10,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 11,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 12,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"if (line.includes('eval(') || line.includes('new Function(')) {\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 20,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 21,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 22,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"description: 'Use of eval() or Function constructor detected',\""
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 32,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"codeSnippet\": \"recommendation: 'Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.',\""
+    },
+    {
+      "id": "SEC-PATH-001",
+      "severity": "high",
+      "category": "Path Traversal",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 42,
+      "description": "Potential path traversal without proper normalization",
+      "recommendation": "Use path.normalize() or path.resolve() to prevent directory traversal attacks.",
+      "codeSnippet": "\"codeSnippet\": \"if (line.includes('path.join') && (line.includes('..') || line.includes('../'))) {\""
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 52,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"codeSnippet\": \"if (line.includes('JSON.parse') && (line.toLowerCase().includes('req.') || line.toLowerCase().includes('userinput') || line.toLowerCase().includes('data'))) {\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 62,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"if (line.includes('innerHTML') || line.includes('outerHTML') || line.includes('document.write')) {\""
+    },
+    {
+      "id": "SEC-CRYPTO-001",
+      "severity": "medium",
+      "category": "Weak Cryptography",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 72,
+      "description": "Use of weak cryptographic hash functions (MD5/SHA1)",
+      "recommendation": "Use stronger hash functions like SHA-256 or SHA-3.",
+      "codeSnippet": "\"codeSnippet\": \"if (line.includes('crypto.createHash') && (line.includes('md5') || line.includes('sha1'))) {\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 80,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 82,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"if (line.includes('Math.random')) {\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 90,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 92,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"description: 'Use of Math.random() for security purposes',\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 100,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 101,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 102,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"message: 'Usage of eval() allows arbitrary code execution',\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 110,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 111,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 112,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"message: 'new Function() allows arbitrary code execution',\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 120,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 122,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"message: 'Math.random() is not cryptographically secure',\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 132,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"pattern: /innerHTML\\\\s*=/,\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 142,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"message: 'document.write() can lead to XSS and is deprecated',\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 150,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 151,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 152,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"message: \\\"CSP contains 'unsafe-eval' which allows eval() and similar\\\",\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 160,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 161,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 162,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"if (content.includes('eval(') || content.includes('new Function(')) {\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 170,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 171,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 172,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"details: `Build script ${script} contains unsafe eval() or new Function()`,\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 180,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 181,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 182,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"if (content.includes('eval(')) {\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 190,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 191,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 192,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"vulnerabilityDetails += `\\\\n  - eval() found in ${file}`;\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 202,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"if (content.includes('innerHTML') || content.includes('outerHTML')) {\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 212,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"vulnerabilityDetails += `\\\\n  - DOM manipulation with innerHTML/outerHTML found in ${file}`;\""
+    },
+    {
+      "id": "SEC-PATH-001",
+      "severity": "high",
+      "category": "Path Traversal",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 222,
+      "description": "Potential path traversal without proper normalization",
+      "recommendation": "Use path.normalize() or path.resolve() to prevent directory traversal attacks.",
+      "codeSnippet": "\"codeSnippet\": \"if (content.includes('path.join') && (content.includes('..') || content.includes('../'))) {\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 230,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 231,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 232,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"if (line.includes('eval(')) {\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 240,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 241,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 242,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"if (line.includes('new Function(')) {\""
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 252,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"codeSnippet\": \"if (line.includes('JSON.parse') && (line.includes('req.') || line.includes('userInput'))) {\""
+    },
+    {
+      "id": "SEC-PATH-001",
+      "severity": "high",
+      "category": "Path Traversal",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 262,
+      "description": "Potential path traversal without proper normalization",
+      "recommendation": "Use path.normalize() or path.resolve() to prevent directory traversal attacks.",
+      "codeSnippet": "\"codeSnippet\": \"if (line.includes('path.join') && (line.includes('..') || line.includes('../')) &&\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 270,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 271,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 272,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"message: 'Usage of eval() is dangerous and can lead to code injection',\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 280,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 281,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 282,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"message: 'Usage of new Function() is dangerous and can lead to code injection',\""
+    },
+    {
+      "id": "SEC-CMD-001",
+      "severity": "critical",
+      "category": "Command Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 292,
+      "description": "Potential command injection with user input",
+      "recommendation": "Avoid passing user input directly to system commands. Use parameterized queries or validation.",
+      "codeSnippet": "\"codeSnippet\": \"'Usage of child_process.exec() can lead to command injection if input is not sanitized',\""
+    },
+    {
+      "id": "SEC-PATH-001",
+      "severity": "high",
+      "category": "Path Traversal",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 302,
+      "description": "Potential path traversal without proper normalization",
+      "recommendation": "Use path.normalize() or path.resolve() to prevent directory traversal attacks.",
+      "codeSnippet": "\"codeSnippet\": \"pathname: path.join(__dirname, '../dist/index.html'),\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 310,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 312,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"generateId: (): string => `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,\""
+    },
+    {
+      "id": "SEC-PATH-001",
+      "severity": "high",
+      "category": "Path Traversal",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 322,
+      "description": "Potential path traversal without proper normalization",
+      "recommendation": "Use path.normalize() or path.resolve() to prevent directory traversal attacks.",
+      "codeSnippet": "\"codeSnippet\": \"preload: path.join(__dirname, '../preload/preload.js'),\""
+    },
+    {
+      "id": "SEC-PATH-001",
+      "severity": "high",
+      "category": "Path Traversal",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 332,
+      "description": "Potential path traversal without proper normalization",
+      "recommendation": "Use path.normalize() or path.resolve() to prevent directory traversal attacks.",
+      "codeSnippet": "\"codeSnippet\": \"pathname: path.join(__dirname, '../../dist/index.html'),\""
+    },
+    {
+      "id": "SEC-PATH-001",
+      "severity": "high",
+      "category": "Path Traversal",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 342,
+      "description": "Potential path traversal without proper normalization",
+      "recommendation": "Use path.normalize() or path.resolve() to prevent directory traversal attacks.",
+      "codeSnippet": "\"codeSnippet\": \"return path.join(__dirname, '../../assets/icon.png');\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 352,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"this.viewSwitcher.innerHTML = '';\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 362,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"this.cardsContainer.innerHTML = '';\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 372,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"this.cardsContainer.innerHTML =\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 382,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"this.cardsContainer.innerHTML = '';\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 392,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"this.cardsContainer.innerHTML =\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 402,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"cardElement.innerHTML = `\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 410,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 412,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"const numParagraphs = Math.min(templates.length, Math.max(2, Math.floor(Math.random() * 3) + 2)); // 2-4 paragraphs\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 420,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 422,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"randomIndex = Math.floor(Math.random() * templates.length);\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 430,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 432,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"const randomSection = additionalSections[Math.floor(Math.random() * additionalSections.length)];\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 442,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"container.innerHTML = '';\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 452,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"container.innerHTML = '<div class=\\\"no-results\\\">No matching topics found</div>';\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 462,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"cardEl.innerHTML = `<h3 class=\\\"simple-card-title\\\">${result.highlighted}</h3>`;\""
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 472,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"codeSnippet\": \"data: JSON.parse(xhr.responseText),\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 482,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"innerHTML?: string;\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 492,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"if (options.innerHTML) {\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 502,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"element.innerHTML = options.innerHTML;\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 510,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 512,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"return `sub_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 520,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 522,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"generateId: (): string => `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 532,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"return div.innerHTML;\""
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 540,
+      "description": "Potential hardcoded credential detected: TOKEN: 'auth_token'",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "\"description\": \"Potential hardcoded credential detected: TOKEN: 'auth_token'\","
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 542,
+      "description": "Potential hardcoded credential detected: TOKEN: 'auth_token'",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "\"codeSnippet\": \"AUTH_TOKEN: 'auth_token',\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 552,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"this.container.innerHTML = '';\""
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 562,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"codeSnippet\": \"return JSON.parse(serializedData) as T;\""
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 572,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"codeSnippet\": \"return JSON.parse(serializedData) as T;\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 582,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"container.innerHTML = '';\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 592,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"container.innerHTML = '<div class=\\\"no-results\\\">No matching topics found</div>';\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 602,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"cardEl.innerHTML = `<h3 class=\\\"simple-card-title\\\">${highlightQuery ? result.highlighted : card.title}</h3>`;\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 612,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"} else if (key === 'textContent' || key === 'innerHTML') {\""
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 620,
+      "description": "Potential hardcoded credential detected: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "\"description\": \"Potential hardcoded credential detected: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'\","
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 622,
+      "description": "Potential hardcoded credential detected: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "\"codeSnippet\": \"const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 630,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 632,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"result += chars.charAt(Math.floor(Math.random() * chars.length));\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 642,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"winbox.body.innerHTML = this.generateCompactContent(card);\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 650,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 652,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"const numParagraphs = Math.min(templates.length, Math.max(2, Math.floor(Math.random() * 3) + 2)); // 2-4 paragraphs\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 660,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 662,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"randomIndex = Math.floor(Math.random() * templates.length);\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 670,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 672,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"const randomSection = additionalSections[Math.floor(Math.random() * additionalSections.length)];\""
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 682,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "\"codeSnippet\": \"winbox.body.innerHTML = this.generateCompactContent(card);\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 690,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 692,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"delay = delay * (0.5 + Math.random() * 0.5);\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 700,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 702,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"const j = Math.floor(Math.random() * (i + 1));\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 710,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 712,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"const r = (Math.random() * 16) | 0;\""
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 720,
+      "description": "Potential hardcoded credential detected: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "\"description\": \"Potential hardcoded credential detected: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'\","
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 722,
+      "description": "Potential hardcoded credential detected: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "\"codeSnippet\": \"const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 730,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 732,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"result += chars.charAt(Math.floor(Math.random() * chars.length));\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 740,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 742,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"// Fallback to Math.random (less secure)\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 750,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 752,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"return Math.floor(Math.random() * (max - min + 1)) + min;\""
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 760,
+      "description": "Potential hardcoded credential detected: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "\"description\": \"Potential hardcoded credential detected: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'\","
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 762,
+      "description": "Potential hardcoded credential detected: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "\"codeSnippet\": \"const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';\""
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 770,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"description\": \"Use of Math.random() for security purposes\","
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 772,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "\"codeSnippet\": \"result += chars.charAt(Math.floor(Math.random() * chars.length));\""
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 780,
+      "description": "Potential hardcoded credential detected: Key = `${options.method || '",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "\"description\": \"Potential hardcoded credential detected: Key = `${options.method || '\","
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 782,
+      "description": "Potential hardcoded credential detected: Key = `${options.method || '",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "\"codeSnippet\": \"const cacheKey = `${options.method || 'GET'}:${fullUrl}:${JSON.stringify(options.body || '')}`;\""
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 792,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"codeSnippet\": \"const parsedData = responseData ? JSON.parse(responseData) : null;\""
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 802,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"codeSnippet\": \"const data = JSON.parse(event.data);\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 810,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 811,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 812,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"if (content.includes('eval(') ||\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 820,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 821,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 822,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"content.includes('new Function(') ||\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 830,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 831,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 832,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"content.includes('eval(') ||\""
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 840,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"description\": \"Use of eval() or Function constructor detected\","
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 841,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "\"recommendation\": \"Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.\","
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/security-scan-report.json",
+      "line": 842,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "\"codeSnippet\": \"content.includes('new Function(') ||\""
+    },
+    {
+      "id": "SEC-PATH-001",
+      "severity": "high",
+      "category": "Path Traversal",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/main/index.js",
+      "line": 108,
+      "description": "Potential path traversal without proper normalization",
+      "recommendation": "Use path.normalize() or path.resolve() to prevent directory traversal attacks.",
+      "codeSnippet": "pathname: path.join(__dirname, '../dist/index.html'),"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/main/lib/index.ts",
+      "line": 73,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "generateId: (): string => `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,"
+    },
+    {
+      "id": "SEC-PATH-001",
+      "severity": "high",
+      "category": "Path Traversal",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/main/lib/window-manager.ts",
+      "line": 78,
+      "description": "Potential path traversal without proper normalization",
+      "recommendation": "Use path.normalize() or path.resolve() to prevent directory traversal attacks.",
+      "codeSnippet": "preload: path.join(__dirname, '../preload/preload.js'),"
+    },
+    {
+      "id": "SEC-PATH-001",
+      "severity": "high",
+      "category": "Path Traversal",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/main/lib/window-manager.ts",
+      "line": 208,
+      "description": "Potential path traversal without proper normalization",
+      "recommendation": "Use path.normalize() or path.resolve() to prevent directory traversal attacks.",
+      "codeSnippet": "pathname: path.join(__dirname, '../../dist/index.html'),"
+    },
+    {
+      "id": "SEC-PATH-001",
+      "severity": "high",
+      "category": "Path Traversal",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/main/lib/window-manager.ts",
+      "line": 343,
+      "description": "Potential path traversal without proper normalization",
+      "recommendation": "Use path.normalize() or path.resolve() to prevent directory traversal attacks.",
+      "codeSnippet": "return path.join(__dirname, '../../assets/icon.png');"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/app.ts",
+      "line": 56,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "this.viewSwitcher.innerHTML = '';"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/app.ts",
+      "line": 132,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "this.cardsContainer.innerHTML = '';"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/app.ts",
+      "line": 145,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "this.cardsContainer.innerHTML ="
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/app.ts",
+      "line": 177,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "this.cardsContainer.innerHTML = '';"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/app.ts",
+      "line": 190,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "this.cardsContainer.innerHTML ="
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/app.ts",
+      "line": 212,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "cardElement.innerHTML = `"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/components/window-generator.ts",
+      "line": 131,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "const numParagraphs = Math.min(templates.length, Math.max(2, Math.floor(Math.random() * 3) + 2)); // 2-4 paragraphs"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/components/window-generator.ts",
+      "line": 138,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "randomIndex = Math.floor(Math.random() * templates.length);"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/components/window-generator.ts",
+      "line": 160,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "const randomSection = additionalSections[Math.floor(Math.random() * additionalSections.length)];"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/index.ts",
+      "line": 37,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "container.innerHTML = '';"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/index.ts",
+      "line": 42,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "container.innerHTML = '<div class=\"no-results\">No matching topics found</div>';"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/index.ts",
+      "line": 51,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "cardEl.innerHTML = `<h3 class=\"simple-card-title\">${result.highlighted}</h3>`;"
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/api.ts",
+      "line": 394,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "data: JSON.parse(xhr.responseText),"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/dom.ts",
+      "line": 103,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "innerHTML?: string;"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/dom.ts",
+      "line": 138,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "if (options.innerHTML) {"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/dom.ts",
+      "line": 139,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "element.innerHTML = options.innerHTML;"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/events.ts",
+      "line": 315,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "return `sub_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`;"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/index.ts",
+      "line": 170,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "generateId: (): string => `${Date.now()}-${Math.random().toString(36).substr(2, 9)}`,"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/index.ts",
+      "line": 308,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "return div.innerHTML;"
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/index.ts",
+      "line": 423,
+      "description": "Potential hardcoded credential detected: TOKEN: 'auth_token'",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "AUTH_TOKEN: 'auth_token',"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/state.ts",
+      "line": 142,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "this.container.innerHTML = '';"
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/storage.ts",
+      "line": 28,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "return JSON.parse(serializedData) as T;"
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/storage.ts",
+      "line": 71,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "return JSON.parse(serializedData) as T;"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/ui/renderer.ts",
+      "line": 46,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "container.innerHTML = '';"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/ui/renderer.ts",
+      "line": 53,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "container.innerHTML = '<div class=\"no-results\">No matching topics found</div>';"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/ui/renderer.ts",
+      "line": 61,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "cardEl.innerHTML = `<h3 class=\"simple-card-title\">${highlightQuery ? result.highlighted : card.title}</h3>`;"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/ui-utils.ts",
+      "line": 125,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "} else if (key === 'textContent' || key === 'innerHTML') {"
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/utils-enhanced.ts",
+      "line": 133,
+      "description": "Potential hardcoded credential detected: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/lib/utils-enhanced.ts",
+      "line": 136,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "result += chars.charAt(Math.floor(Math.random() * chars.length));"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/use-cases/base-window-usecase.ts",
+      "line": 50,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "winbox.body.innerHTML = this.generateCompactContent(card);"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/window-generator.ts",
+      "line": 131,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "const numParagraphs = Math.min(templates.length, Math.max(2, Math.floor(Math.random() * 3) + 2)); // 2-4 paragraphs"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/window-generator.ts",
+      "line": 138,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "randomIndex = Math.floor(Math.random() * templates.length);"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/window-generator.ts",
+      "line": 160,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "const randomSection = additionalSections[Math.floor(Math.random() * additionalSections.length)];"
+    },
+    {
+      "id": "SEC-DOMXSS-001",
+      "severity": "high",
+      "category": "DOM XSS",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/renderer/window-usecase-factory.ts",
+      "line": 65,
+      "description": "Potential DOM-based XSS via direct HTML assignment",
+      "recommendation": "Sanitize user input before inserting into DOM or use safer methods like textContent.",
+      "codeSnippet": "winbox.body.innerHTML = this.generateCompactContent(card);"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/shared/lib/utils/advanced.ts",
+      "line": 413,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "delay = delay * (0.5 + Math.random() * 0.5);"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/shared/lib/utils/array.ts",
+      "line": 68,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "const j = Math.floor(Math.random() * (i + 1));"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/shared/lib/utils/crypto.ts",
+      "line": 23,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "const r = (Math.random() * 16) | 0;"
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/shared/lib/utils/crypto.ts",
+      "line": 86,
+      "description": "Potential hardcoded credential detected: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/shared/lib/utils/crypto.ts",
+      "line": 89,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "result += chars.charAt(Math.floor(Math.random() * chars.length));"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/shared/lib/utils/crypto.ts",
+      "line": 104,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "// Fallback to Math.random (less secure)"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/shared/lib/utils/crypto.ts",
+      "line": 105,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "return Math.floor(Math.random() * (max - min + 1)) + min;"
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/shared/lib/utils/misc.ts",
+      "line": 2,
+      "description": "Potential hardcoded credential detected: 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789'",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';"
+    },
+    {
+      "id": "SEC-RANDOM-001",
+      "severity": "medium",
+      "category": "Insecure Random Generation",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/shared/lib/utils/misc.ts",
+      "line": 5,
+      "description": "Use of Math.random() for security purposes",
+      "recommendation": "Use crypto.randomBytes() or crypto.getRandomValues() for cryptographically secure random values.",
+      "codeSnippet": "result += chars.charAt(Math.floor(Math.random() * chars.length));"
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/shared/lib/utils/network.ts",
+      "line": 65,
+      "description": "Potential hardcoded credential detected: Key = `${options.method || '",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "const cacheKey = `${options.method || 'GET'}:${fullUrl}:${JSON.stringify(options.body || '')}`;"
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/shared/lib/utils/network.ts",
+      "line": 135,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "const parsedData = responseData ? JSON.parse(responseData) : null;"
+    },
+    {
+      "id": "SEC-DESERIALIZE-001",
+      "severity": "high",
+      "category": "Insecure Deserialization",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/src/shared/lib/utils/network.ts",
+      "line": 383,
+      "description": "Unvalidated input to JSON.parse() detected",
+      "recommendation": "Validate and sanitize input before parsing. Consider using a schema validation library.",
+      "codeSnippet": "const data = JSON.parse(event.data);"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/test/security/ipc-security.test.ts",
+      "line": 87,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "if (content.includes('eval(') ||"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/test/security/ipc-security.test.ts",
+      "line": 88,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "content.includes('new Function(') ||"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/test/security/security-suite.test.ts",
+      "line": 177,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "content.includes('eval(') ||"
+    },
+    {
+      "id": "SEC-EVAL-001",
+      "severity": "critical",
+      "category": "Code Injection",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/test/security/security-suite.test.ts",
+      "line": 178,
+      "description": "Use of eval() or Function constructor detected",
+      "recommendation": "Avoid dynamic code evaluation. Use safer alternatives like JSON.parse() for data parsing.",
+      "codeSnippet": "content.includes('new Function(') ||"
+    },
+    {
+      "id": "SEC-CRED-001",
+      "severity": "critical",
+      "category": "Hardcoded Credentials",
+      "file": "/run/media/naranyala/Data/projects-remote/starter-rspack-electron-vanilla/tsconfig.json",
+      "line": 10,
+      "description": "Potential hardcoded credential detected: \"forceConsistentCasingInFileNames\"",
+      "recommendation": "Move credentials to environment variables or secure configuration management systems.",
+      "codeSnippet": "\"forceConsistentCasingInFileNames\": true,"
+    }
+  ],
+  "summary": {
+    "total": 228,
+    "critical": 69,
+    "high": 97,
+    "medium": 62,
+    "low": 0
+  },
+  "scannedFiles": 132,
+  "scanDuration": 181
+}

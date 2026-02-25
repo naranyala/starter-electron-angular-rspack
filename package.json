@@ -1,0 +1,141 @@
+{
+  "name": "electron-vanilla-ts-rspack",
+  "version": "0.1.2",
+  "main": "main.cjs",
+  "type": "module",
+  "description": "Boilerplate using Rspack as bundler for Electron apps with vanilla TypeScript.",
+  "scripts": {
+    "deps:latest": "bunx npm-check-updates -u -p bun",
+    "dev": "npx tsx scripts/dev.ts",
+    "dev:verbose": "npx tsx scripts/dev.ts --verbose",
+    "electron-dev": "bunx electron main.cjs --start-dev",
+    "start": "bunx electron main.cjs",
+    "build": "npx tsx scripts/build.ts",
+    "build:check": "npx tsx scripts/build.ts --type-check",
+    "build:verbose": "npx tsx scripts/build.ts --verbose",
+    "build:frontend": "cd frontend && ./node_modules/.bin/ng build --configuration=production",
+    "build:main": "./node_modules/.bin/rspack build",
+    "postbuild": "npx tsx scripts/copy-assets.ts",
+    "check-deps": "npx tsx scripts/check-deps.ts",
+    "check-deps:dev": "npx tsx scripts/check-deps.ts --dev",
+    "clean": "npx tsx scripts/clean.ts",
+    "clean:dry": "npx tsx scripts/clean.ts --dry-run",
+    "type-check": "npx tsx scripts/type-check.ts",
+    "type-check:strict": "npx tsx scripts/type-check.ts --strict",
+    "lint": "bunx @biomejs/biome check --write .",
+    "lint-check": "bunx @biomejs/biome check .",
+    "format": "bunx @biomejs/biome format --write .",
+    "format-check": "bunx @biomejs/biome format .",
+    "icons": "npx tsx scripts/build-icons.ts",
+    "assets": "npx tsx scripts/copy-assets.ts",
+    "electron-pack": "bunx electron-builder --dir",
+    "electron-dist": "bunx electron-builder",
+    "electron-postinstall": "bunx electron-builder install-app-deps",
+    "dist": "npm run build && npm run electron-dist",
+    "test": "bun test test/security/",
+    "test:watch": "bun test --watch test/security/",
+    "test:ui": "bun test --ui test/security/",
+    "test:coverage": "bun test --coverage test/security/",
+    "test:unit": "bun test test/unit/",
+    "test:security": "bun test test/security/",
+    "test:security:watch": "bun test --watch test/security/",
+    "security:audit": "tsx scripts/security/enhanced-security-audit.ts",
+    "security:scan": "tsx scripts/security/advanced-security-scanner.ts",
+    "security:analyze": "tsx scripts/security/code-analysis.ts",
+    "security:build": "tsx scripts/security/security-build-pipeline.ts",
+    "security:build:strict": "tsx scripts/security/security-build-pipeline.ts --enforce --audit --scan --verify",
+    "security:verify": "tsx scripts/security/security-build.ts --verify",
+    "security:all": "npm run security:scan && npm run security:audit && npm run test:security",
+    "security:ci": "npm run security:build:strict && npm run test:security && npm run security:scan"
+  },
+  "author": "naranyala",
+  "build": {
+    "appId": "com.some.electron.quickstart",
+    "productName": "Electron Vanilla TS Rspack",
+    "asar": false,
+    "directories": {
+      "output": "release"
+    },
+    "extraResources": [
+      {
+        "from": "dist/",
+        "to": "dist/"
+      },
+      {
+        "from": "assets/",
+        "to": "assets/"
+      }
+    ],
+    "files": [
+      "main.cjs",
+      "package.json",
+      "dist/**/*",
+      "frontend/dist/browser/**/*"
+    ],
+    "dmg": {
+      "contents": [
+        {
+          "x": 110,
+          "y": 150
+        },
+        {
+          "x": 240,
+          "y": 150,
+          "type": "link",
+          "path": "/Applications"
+        }
+      ]
+    },
+    "linux": {
+      "category": "Utility",
+      "target": [
+        "AppImage"
+      ]
+    },
+    "win": {
+      "target": "zip"
+    }
+  },
+  "keywords": [
+    "rspack",
+    "typescript",
+    "electron",
+    "vanilla"
+  ],
+  "license": "MIT",
+  "dependencies": {
+    "winbox": "^0.2.82"
+  },
+  "devDependencies": {
+    "@angular/build": "^21.1.4",
+    "@angular/common": "^21.1.5",
+    "@angular/compiler": "^21.1.5",
+    "@angular/compiler-cli": "^21.1.5",
+    "@angular/core": "^21.1.5",
+    "@angular/forms": "^21.1.5",
+    "@angular/platform-browser": "^21.1.5",
+    "@angular/platform-browser-dynamic": "^21.1.5",
+    "@angular/router": "^21.1.5",
+    "@rspack/cli": "^1.7.5",
+    "@rspack/core": "^1.7.5",
+    "@types/node": "^25.2.0",
+    "copy-webpack-plugin": "^13.0.1",
+    "css-loader": "^7.1.3",
+    "electron": "^40.1.0",
+    "electron-builder": "^26.7.0",
+    "electron-reload": "^2.0.0-alpha.1",
+    "esbuild-loader": "^4.4.2",
+    "get-port": "^7.1.0",
+    "html-rspack-plugin": "^6.1.7",
+    "html-webpack-plugin": "^5.6.6",
+    "mini-css-extract-plugin": "^2.10.0",
+    "raw-loader": "^4.0.2",
+    "sass": "^1.97.3",
+    "sass-loader": "^16.0.7",
+    "style-loader": "^4.0.0",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3",
+    "wait-on": "^9.0.3",
+    "zone.js": "^0.16.1"
+  }
+}
