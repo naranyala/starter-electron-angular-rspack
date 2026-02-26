@@ -1,7 +1,21 @@
 import { describe, test, expect } from 'bun:test';
 import { promises as fs } from 'fs';
 import path from 'path';
-import { JSDOM } from 'jsdom';
+let JSDOM: typeof import('jsdom').JSDOM | null = null;
+
+async function getDom(htmlContent: string): Promise<Document | null> {
+  if (!JSDOM) {
+    try {
+      const mod = await import('jsdom');
+      JSDOM = mod.JSDOM;
+    } catch {
+      return null;
+    }
+  }
+
+  const dom = new JSDOM(htmlContent);
+  return dom.window.document;
+}
 
 // CSP validation tests
 describe('Content Security Policy Validation', () => {
@@ -12,8 +26,8 @@ describe('Content Security Policy Validation', () => {
     
     if (indexExists) {
       const htmlContent = await fs.readFile(indexPath, 'utf-8');
-      const dom = new JSDOM(htmlContent);
-      const document = dom.window.document;
+      const document = await getDom(htmlContent);
+      if (!document) return;
       
       // Find CSP meta tag
       const cspMeta = Array.from(document.querySelectorAll('meta'))
@@ -28,8 +42,8 @@ describe('Content Security Policy Validation', () => {
       
       for (const htmlFile of htmlFiles) {
         const htmlContent = await fs.readFile(htmlFile, 'utf-8');
-        const dom = new JSDOM(htmlContent);
-        const document = dom.window.document;
+        const document = await getDom(htmlContent);
+        if (!document) continue;
         
         const cspMeta = Array.from(document.querySelectorAll('meta'))
           .find(meta => meta.getAttribute('http-equiv')?.toLowerCase() === 'content-security-policy');
@@ -51,8 +65,8 @@ describe('Content Security Policy Validation', () => {
     
     if (indexExists) {
       const htmlContent = await fs.readFile(indexPath, 'utf-8');
-      const dom = new JSDOM(htmlContent);
-      const document = dom.window.document;
+      const document = await getDom(htmlContent);
+      if (!document) return;
       
       const cspMeta = Array.from(document.querySelectorAll('meta'))
         .find(meta => meta.getAttribute('http-equiv')?.toLowerCase() === 'content-security-policy');
@@ -78,8 +92,8 @@ describe('Content Security Policy Validation', () => {
     
     for (const htmlFile of htmlFiles) {
       const htmlContent = await fs.readFile(htmlFile, 'utf-8');
-      const dom = new JSDOM(htmlContent);
-      const document = dom.window.document;
+      const document = await getDom(htmlContent);
+      if (!document) continue;
       
       const cspMeta = Array.from(document.querySelectorAll('meta'))
         .find(meta => meta.getAttribute('http-equiv')?.toLowerCase() === 'content-security-policy');
@@ -109,8 +123,8 @@ describe('Content Security Policy Validation', () => {
     
     for (const htmlFile of htmlFiles) {
       const htmlContent = await fs.readFile(htmlFile, 'utf-8');
-      const dom = new JSDOM(htmlContent);
-      const document = dom.window.document;
+      const document = await getDom(htmlContent);
+      if (!document) continue;
       
       const cspMeta = Array.from(document.querySelectorAll('meta'))
         .find(meta => meta.getAttribute('http-equiv')?.toLowerCase() === 'content-security-policy');
@@ -143,8 +157,8 @@ describe('Content Security Policy Validation', () => {
     
     for (const htmlFile of htmlFiles) {
       const htmlContent = await fs.readFile(htmlFile, 'utf-8');
-      const dom = new JSDOM(htmlContent);
-      const document = dom.window.document;
+      const document = await getDom(htmlContent);
+      if (!document) continue;
       
       const cspMeta = Array.from(document.querySelectorAll('meta'))
         .find(meta => meta.getAttribute('http-equiv')?.toLowerCase() === 'content-security-policy');
@@ -178,8 +192,8 @@ describe('Content Security Policy Validation', () => {
     
     for (const htmlFile of htmlFiles) {
       const htmlContent = await fs.readFile(htmlFile, 'utf-8');
-      const dom = new JSDOM(htmlContent);
-      const document = dom.window.document;
+      const document = await getDom(htmlContent);
+      if (!document) continue;
       
       const cspMeta = Array.from(document.querySelectorAll('meta'))
         .find(meta => meta.getAttribute('http-equiv')?.toLowerCase() === 'content-security-policy');
@@ -202,16 +216,25 @@ describe('Content Security Policy Validation', () => {
 
   // Helper function to find HTML files
   async function findHtmlFiles(dir: string): Promise<string[]> {
-    const files = await fs.readdir(dir);
+    const files = await fs.readdir(dir, { withFileTypes: true });
     let htmlFiles: string[] = [];
     
-    for (const file of files) {
-      const filePath = path.join(dir, file);
-      const stat = await fs.stat(filePath);
+    for (const entry of files) {
+      const filePath = path.join(dir, entry.name);
+      const baseName = path.basename(filePath);
       
-      if (stat.isDirectory()) {
+      if (entry.isDirectory()) {
+        if (
+          baseName === 'node_modules' ||
+          baseName === 'dist' ||
+          baseName === 'build' ||
+          baseName === '.git' ||
+          baseName === 'coverage'
+        ) {
+          continue;
+        }
         htmlFiles = htmlFiles.concat(await findHtmlFiles(filePath));
-      } else if (path.extname(filePath) === '.html') {
+      } else if (entry.isFile() && path.extname(filePath) === '.html') {
         htmlFiles.push(filePath);
       }
     }

@@ -3,7 +3,7 @@ import {
   type MainUseCase,
   QuitAppUseCase,
   ShowMessageUseCase,
-} from './index.js';
+} from './index';
 
 export type UseCaseType = 'CREATE_WINDOW' | 'QUIT_APP' | 'SHOW_MESSAGE';
 

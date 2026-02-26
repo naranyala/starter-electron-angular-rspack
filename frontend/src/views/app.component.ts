@@ -405,12 +405,12 @@ export class AppComponent implements OnInit, OnDestroy {
       topOffset = 40 + 40; // Bar + content (40px bar + ~40px content)
     }
 
-    // Calculate bottom panel height (smaller compact design)
+    // Calculate bottom panel height (expanded to half screen)
     let bottomOffset = 0;
     if (this.bottomCollapsed()) {
       bottomOffset = 40; // Collapsed height
     } else {
-      bottomOffset = 40 + 90; // Bar + expanded content (40px bar + ~90px content)
+      bottomOffset = Math.round(windowHeight * 0.5); // Expanded: 50% of viewport
     }
 
     // Add padding to prevent titlebar overlap

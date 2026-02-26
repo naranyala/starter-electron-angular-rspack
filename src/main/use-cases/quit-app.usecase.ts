@@ -1,5 +1,5 @@
 import { app } from 'electron';
-import type { MainUseCase } from './base-main-usecase.js';
+import type { MainUseCase } from './base-main-usecase';
 
 export interface QuitAppUseCaseData {
   force?: boolean;

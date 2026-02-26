@@ -79,6 +79,14 @@ export const IPC_CHANNELS = {
     STATS: 'event:stats',
     CLEAR: 'event:clear',
   },
+
+  // ═══════════════════════════════════════════════════════════════════════════
+  // DEVTOOLS
+  // ═══════════════════════════════════════════════════════════════════════════
+  DEVTOOLS: {
+    GET_STATS: 'devtools:get-stats',
+    GET_LOGS: 'devtools:get-logs',
+  },
 } as const;
 
 /**
@@ -91,6 +99,7 @@ export type AppChannels = typeof IPC_CHANNELS.APP;
 export type FsChannels = typeof IPC_CHANNELS.FS;
 export type ConfigChannels = typeof IPC_CHANNELS.CONFIG;
 export type ErrorChannels = typeof IPC_CHANNELS.ERROR;
+export type DevtoolsChannels = typeof IPC_CHANNELS.DEVTOOLS;
 
 /**
  * Get all channel keys as array

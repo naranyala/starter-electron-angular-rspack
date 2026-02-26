@@ -1,5 +1,5 @@
-import { getThemeByCategory } from '../../../shared/lib/config';
-import type { MenuItem, Theme, WindowConfig } from '../../../shared/lib/types';
+import { getThemeByCategory } from '../../../shared/theme';
+import type { MenuItem, Theme, WindowConfig } from '../../../shared/types';
 import { generateId } from '../../../shared/lib/utils';
 import { registerWinBox } from '../../winbox-sidebar';
 

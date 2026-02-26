@@ -4,9 +4,9 @@
  * Utilities for handling errors in the main process using "errors as values" pattern.
  */
 
-import type { ErrorValue, Result, AsyncResult } from '@shared/errors/index.js';
-import { ErrorCode, errFromCode, errFromException, ok, tryAsync } from '@shared/errors/index.js';
-import { LoggerService } from '../services/logger.service.js';
+import type { ErrorValue, Result, AsyncResult } from '@shared/errors/index';
+import { ErrorCode, errFromCode, errFromException, ok, tryAsync } from '@shared/errors/index';
+import { LoggerService } from '../services/logger.service';
 
 /**
  * Error handler configuration

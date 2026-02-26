@@ -9,7 +9,7 @@
  *   const config = { ...DEFAULT_CONFIG, devTools: false };
  */
 
-import { LogLevel } from '../services/logger.service';
+import { LogLevel } from '../../shared/types';
 
 /**
  * Window configuration
@@ -68,8 +68,8 @@ export const DEFAULT_CONFIG: AppConfig = {
   version: '0.1.2',
   environment: 'development',
   window: {
-    defaultWidth: 1200,
-    defaultHeight: 800,
+    defaultWidth: 800,
+    defaultHeight: 600,
     minWidth: 400,
     minHeight: 300,
     center: true,

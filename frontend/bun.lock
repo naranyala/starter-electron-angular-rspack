@@ -39,7 +39,6 @@
         "style-loader": "^4.0.0",
         "ts-node": "~10.9.2",
         "typescript": "~5.9.0",
-        "zone.js": "~0.15.1",
       },
     },
   },

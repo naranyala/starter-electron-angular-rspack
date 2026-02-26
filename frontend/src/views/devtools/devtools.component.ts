@@ -7,29 +7,12 @@ import { ErrorDashboardVM } from '../../viewmodels/error-dashboard.viewmodel';
 import { errorInterceptor } from '../../core/error-interceptor';
 import { EventBusViewModel } from '../../viewmodels/event-bus.viewmodel';
 import { getLogger } from '../../viewmodels/logger.viewmodel';
+import type { BackendStats as BackendStatsPayload } from '../../types';
 
 const logger = getLogger('devtools');
 
 // Backend stats interfaces
-export interface BackendStats {
-  memory?: {
-    heap_used: number;
-    heap_total: number;
-    rss: number;
-  };
-  database?: {
-    connections: number;
-    idle_connections: number;
-    utilization: number;
-  };
-  errors?: {
-    total: number;
-    errors: number;
-    warnings: number;
-    critical: number;
-  };
-  uptime?: number;
-}
+export interface BackendStats extends BackendStatsPayload {}
 
 // Frontend stats interfaces
 export interface FrontendStats {
@@ -110,7 +93,7 @@ export interface DevLogEntry {
                 </div>
                 @if (backendStats.memory) {
                   <div class="stat-card">
-                    <div class="stat-card__value">{{ (backendStats.memory.heap_used / 1024 / 1024).toFixed(1) }} MB</div>
+                    <div class="stat-card__value">{{ (backendStats.memory.heapUsed / 1024 / 1024).toFixed(1) }} MB</div>
                     <div class="stat-card__label">Heap Used</div>
                   </div>
                   <div class="stat-card">
@@ -118,38 +101,56 @@ export interface DevLogEntry {
                     <div class="stat-card__label">RSS Memory</div>
                   </div>
                 }
-                @if (backendStats.database) {
+                @if (backendStats.windows) {
                   <div class="stat-card">
-                    <div class="stat-card__value">{{ backendStats.database.connections }}</div>
-                    <div class="stat-card__label">DB Connections</div>
-                  </div>
-                  <div class="stat-card">
-                    <div class="stat-card__value">{{ backendStats.database.utilization.toFixed(0) }}%</div>
-                    <div class="stat-card__label">DB Utilization</div>
-                  </div>
-                }
-                @if (backendStats.errors) {
-                  <div class="stat-card stat-card--error">
-                    <div class="stat-card__value">{{ backendStats.errors.total }}</div>
-                    <div class="stat-card__label">Total Errors</div>
-                  </div>
-                  <div class="stat-card stat-card--critical">
-                    <div class="stat-card__value">{{ backendStats.errors.critical }}</div>
-                    <div class="stat-card__label">Critical</div>
+                    <div class="stat-card__value">{{ backendStats.windows.count }}</div>
+                    <div class="stat-card__label">Open Windows</div>
                   </div>
                 }
               </div>
             </div>
 
             <div class="panel-section">
-              <h4>🔌 WebUI Bindings</h4>
-              <div class="bindings-list">
-                @for (binding of webuiBindings; track binding) {
-                  <div class="binding-item">
-                    <span class="binding-name">{{ binding }}</span>
-                    <span class="binding-status status-ok">Active</span>
-                  </div>
-                }
+              <h4>🧩 Backend Environment</h4>
+              <div class="env-grid">
+                <div class="env-row">
+                  <span class="env-label">App</span>
+                  <span class="env-value">{{ backendStats.app?.name }} {{ backendStats.app?.version }}</span>
+                </div>
+                <div class="env-row">
+                  <span class="env-label">Platform</span>
+                  <span class="env-value">{{ backendStats.platform?.platform }} {{ backendStats.platform?.arch }}</span>
+                </div>
+                <div class="env-row">
+                  <span class="env-label">PID</span>
+                  <span class="env-value">{{ backendStats.platform?.pid }}</span>
+                </div>
+                <div class="env-row">
+                  <span class="env-label">Runtime</span>
+                  <span class="env-value">Node {{ backendStats.runtime?.node }} · Electron {{ backendStats.runtime?.electron }}</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="panel-section">
+              <h4>📡 Backend Event Bus</h4>
+              <div class="event-stats">
+                <div class="event-stat">
+                  <span class="event-stat__label">Published:</span>
+                  <span class="event-stat__value">{{ backendStats.eventBus?.totalPublished || 0 }}</span>
+                </div>
+                <div class="event-stat">
+                  <span class="event-stat__label">Received:</span>
+                  <span class="event-stat__value">{{ backendStats.eventBus?.totalReceived || 0 }}</span>
+                </div>
+                <div class="event-stat">
+                  <span class="event-stat__label">Subscribers:</span>
+                  <span class="event-stat__value">{{ backendStats.eventBus?.activeSubscriptions || 0 }}</span>
+                </div>
+                <div class="event-stat">
+                  <span class="event-stat__label">History:</span>
+                  <span class="event-stat__value">{{ backendStats.eventBus?.historySize || 0 }}</span>
+                </div>
               </div>
             </div>
 
@@ -519,6 +520,33 @@ export interface DevLogEntry {
       margin: 12px 0 8px 0;
       font-size: 12px;
       color: #858585;
+    }
+
+    .env-grid {
+      display: grid;
+      gap: 8px;
+      padding: 4px 0;
+    }
+
+    .env-row {
+      display: grid;
+      grid-template-columns: 140px 1fr;
+      gap: 12px;
+      font-size: 12px;
+      color: #d7d7d7;
+    }
+
+    .env-label {
+      color: #9b9b9b;
+      text-transform: uppercase;
+      letter-spacing: 0.04em;
+      font-size: 10px;
+    }
+
+    .env-value {
+      color: #f1f1f1;
+      font-family: 'SF Mono', 'Consolas', monospace;
+      word-break: break-all;
     }
 
     .stats-grid {
@@ -931,7 +959,6 @@ export class DevtoolsComponent implements OnInit, OnDestroy {
   // Backend stats
   backendStats: BackendStats = {};
   backendLogs: DevLogEntry[] = [];
-  webuiBindings: string[] = [];
 
   // Frontend stats
   frontendStats: FrontendStats = {
@@ -1034,32 +1061,16 @@ export class DevtoolsComponent implements OnInit, OnDestroy {
   }
 
   private refreshBackendStats(): void {
-    const win = window as unknown as Record<string, unknown>;
-    
-    // Request backend stats
-    if (typeof win.get_backend_stats === 'function') {
-      win.get_backend_stats('backend_stats');
-    }
+    const api = window.electronAPI;
+    if (!api?.getBackendStats) return;
 
-    // Request DB pool stats
-    if (typeof win.get_db_pool_stats === 'function') {
-      win.get_db_pool_stats('db_pool_stats');
-    }
-
-    // Request error stats
-    if (typeof win.get_error_stats === 'function') {
-      win.get_error_stats('error_stats');
-    }
-
-    // Get WebUI bindings (static list)
-    this.webuiBindings = [
-      'open_folder', 'organize_images', 'increment_counter', 'reset_counter',
-      'get_users', 'create_user', 'update_user', 'delete_user',
-      'get_system_info', 'log_message', 'get_backend_logs',
-      'event:publish', 'event:history', 'event:stats', 'event:clear_history',
-      'window_state_change', 'get_error_stats', 'get_recent_errors',
-      'clear_error_history', 'get_db_pool_stats'
-    ];
+    api.getBackendStats()
+      .then((response) => {
+        this.backendStats = response.stats ?? {};
+      })
+      .catch((error) => {
+        logger.error('Failed to fetch backend stats', { error: String(error) });
+      });
   }
 
   private refreshFrontendStats(): void {
@@ -1104,9 +1115,21 @@ export class DevtoolsComponent implements OnInit, OnDestroy {
     }
 
     // Request backend logs
-    const win = window as unknown as Record<string, unknown>;
-    if (typeof win.get_backend_logs === 'function') {
-      win.get_backend_logs('backend_logs:20');
+    const api = window.electronAPI;
+    if (api?.getBackendLogs) {
+      api.getBackendLogs(20)
+        .then((response) => {
+          this.backendLogs = response.logs.map((log) => ({
+            timestamp: log.timestamp || new Date().toISOString(),
+            level: log.level,
+            source: log.source ?? log.namespace ?? 'backend',
+            message: log.message,
+            context: log.context,
+          }));
+        })
+        .catch((error) => {
+          logger.error('Failed to fetch backend logs', { error: String(error) });
+        });
     }
   }
 

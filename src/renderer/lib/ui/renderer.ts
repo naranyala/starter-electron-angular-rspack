@@ -1,5 +1,5 @@
-import { themeColors } from '../../../shared/lib/config';
-import type { MenuItem, ThemeColors } from '../../../shared/lib/types';
+import { themeColors } from '../../../shared/theme';
+import type { MenuItem, ThemeColors } from '../../../shared/types';
 import { debounce, fuzzySearch } from '../../../shared/lib/utils';
 import {
   addClass,

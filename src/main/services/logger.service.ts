@@ -1,26 +1,8 @@
-import { type BrowserWindow, type IpcMainInvokeEvent, ipcMain } from 'electron';
+import { type IpcMainInvokeEvent, ipcMain } from 'electron';
+import { IPC_CHANNELS } from '../../shared/ipc/channels';
+import type { LogEntry, LogEntryInput } from '../../shared/types';
+import { LogLevel } from '../../shared/types';
 import { container, Injectable } from '../di/index';
-
-export enum LogLevel {
-  DEBUG = 'DEBUG',
-  INFO = 'INFO',
-  WARN = 'WARN',
-  ERROR = 'ERROR',
-}
-
-export interface LogEntry {
-  timestamp: string;
-  level: 'debug' | 'info' | 'warn' | 'error';
-  namespace: string;
-  message: string;
-  context: Record<string, unknown>;
-  error?: {
-    name: string;
-    message: string;
-    stack?: string;
-  };
-  source: 'backend' | 'frontend';
-}
 
 export interface LoggerConfig {
   level: LogLevel;
@@ -38,6 +20,8 @@ const LEVEL_PRIORITY: Record<string, number> = {
 @Injectable({ scope: 'singleton', providedIn: 'root' })
 export class LoggerService {
   private config: LoggerConfig;
+  private history: LogEntry[] = [];
+  private historyLimit = 200;
 
   constructor() {
     this.config = {
@@ -76,7 +60,8 @@ export class LoggerService {
       parts.push(`[${entry.source.toUpperCase()}]`);
     }
 
-    parts.push(`[${entry.timestamp}]`);
+    const timestamp = entry.timestamp ?? new Date().toISOString();
+    parts.push(`[${timestamp}]`);
     parts.push(`[${entry.level.toUpperCase()}]`);
     parts.push(`[${entry.namespace}]`);
 
@@ -123,6 +108,8 @@ export class LoggerService {
       source: 'backend',
     };
 
+    this.recordEntry(entry);
+
     const formatted = this.formatLogEntry(entry);
 
     switch (normalizedLevel) {
@@ -137,6 +124,17 @@ export class LoggerService {
         break;
       default:
         console.log(formatted);
+    }
+  }
+
+  getRecent(limit: number = 50): LogEntry[] {
+    return this.history.slice(-limit);
+  }
+
+  private recordEntry(entry: LogEntry): void {
+    this.history.push(entry);
+    if (this.history.length > this.historyLimit) {
+      this.history.shift();
     }
   }
 
@@ -163,12 +161,13 @@ export class LoggerService {
     this.log(LogLevel.ERROR, namespace, message, context, errorObj);
   }
 
-  setupIPC(win: BrowserWindow | null): void {
-    ipcMain.handle('log:write', async (_event: IpcMainInvokeEvent, entry: LogEntry) => {
+  setupIPC(): void {
+    ipcMain.handle(IPC_CHANNELS.LOG.WRITE, async (_event: IpcMainInvokeEvent, entry: LogEntryInput) => {
       const frontendEntry: LogEntry = {
         ...entry,
         timestamp: entry.timestamp || new Date().toISOString(),
         source: 'frontend',
+        context: entry.context || {},
       };
 
       if (!this.shouldLog(frontendEntry.level)) {
@@ -176,6 +175,8 @@ export class LoggerService {
       }
 
       const formatted = this.formatLogEntry(frontendEntry);
+
+      this.recordEntry(frontendEntry);
 
       switch (frontendEntry.level) {
         case 'error':
@@ -194,11 +195,11 @@ export class LoggerService {
       return { success: true };
     });
 
-    ipcMain.handle('log:get-level', async () => {
+    ipcMain.handle(IPC_CHANNELS.LOG.GET_LEVEL, async () => {
       return this.config.level;
     });
 
-    ipcMain.handle('log:set-level', async (_event: IpcMainInvokeEvent, level: LogLevel) => {
+    ipcMain.handle(IPC_CHANNELS.LOG.SET_LEVEL, async (_event: IpcMainInvokeEvent, level: LogLevel) => {
       this.config.level = level;
       return { success: true, level: this.config.level };
     });

@@ -413,7 +413,7 @@
 }
 
 .bottom-panel {
-  height: 130px; /* Expanded: 40px bar + 90px content */
+  height: 50vh; /* Expanded: half screen */
 }
 
 .bottom-collapsed .bottom-panel {

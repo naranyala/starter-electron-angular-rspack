@@ -5,3 +5,9 @@ node_modules/
 frontend/dist/
 frontend/node_modules/
 frontend/.angular/
+
+*.key
+*.pem
+*.p12
+.env
+.env.*

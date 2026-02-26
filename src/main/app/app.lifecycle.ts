@@ -162,7 +162,8 @@ class LifecycleManager {
 
     if (isDev) {
       try {
-        await this.mainWindow.loadURL('http://localhost:4200');
+        const devUrl = process.env.ELECTRON_START_URL || 'http://localhost:4200';
+        await this.mainWindow.loadURL(devUrl);
         this.logger.info('Loaded from dev server');
       } catch {
         await this.mainWindow.loadFile(frontendPath);

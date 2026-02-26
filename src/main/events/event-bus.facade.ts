@@ -5,7 +5,7 @@
  * Provides convenient methods for common event patterns.
  */
 
-import { EventBus, eventBus } from './event-bus.js';
+import { EventBus, eventBus } from './event-bus';
 import type { 
   EventChannel, 
   EventPayload, 
@@ -15,7 +15,7 @@ import type {
   AppReadyPayload,
   WindowCreatedPayload,
   LogEventPayload,
-} from '@shared/index.js';
+} from '../../shared/events/types';
 import type { BrowserWindow } from 'electron';
 
 /**

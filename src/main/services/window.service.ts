@@ -58,13 +58,16 @@ export class WindowService {
       contextIsolation: true,
       sandbox: true,
       webSecurity: true,
+      allowRunningInsecureContent: false,
+      webviewTag: false,
+      experimentalFeatures: false,
       preload: path.join(process.cwd(), 'src/preload/index'),
     };
 
     const mergedOptions = {
       title: options.title || 'Electron App',
-      width: options.width || 1200,
-      height: options.height || 800,
+      width: options.width || 800,
+      height: options.height || 600,
       minWidth: options.minWidth || 400,
       minHeight: options.minHeight || 300,
       show: options.show !== undefined ? options.show : false,

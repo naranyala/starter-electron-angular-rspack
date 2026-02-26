@@ -16,7 +16,7 @@ import { container } from '../di/index';
 import { LoggerService } from '../services/logger.service';
 import { WindowService } from '../services/window.service';
 import { IpcHandlerService } from '../services/ipc-handler.service';
-import type { AppConfig } from './app.config';
+import { DEFAULT_CONFIG, getConfigForEnvironment, type AppConfig } from './app.config';
 
 /**
  * Window management API through facade
@@ -114,12 +114,14 @@ export class AppFacade {
       return;
     }
 
-    this._config = config || null;
+    const env = (process.env.NODE_ENV as AppConfig['environment']) || 'development';
+    this._config = config || getConfigForEnvironment(env) || DEFAULT_CONFIG;
     
     try {
       // Create and register services manually to ensure proper dependency order
       const logger = new LoggerService();
       this.appContainer.registerValue(LoggerService, logger);
+      logger.setupIPC();
       
       const windowService = new WindowService(logger);
       this.appContainer.registerValue(WindowService, windowService);
@@ -129,7 +131,7 @@ export class AppFacade {
       
       // Now initialize
       this.logger.info('app', 'Application initializing', {
-        environment: config?.environment || 'unknown'
+        environment: this._config.environment,
       });
 
       // Register IPC handlers
@@ -152,16 +154,17 @@ export class AppFacade {
     height?: number;
     devTools?: boolean;
   }): BrowserWindow {
+    const config = this._config || DEFAULT_CONFIG;
     const window = this.windows.create({
       id: 'main',
-      title: options?.title || 'Electron Angular Rspack',
-      width: options?.width || 1200,
-      height: options?.height || 800,
-      minWidth: 400,
-      minHeight: 300,
-      center: true,
+      title: options?.title || config.name,
+      width: options?.width ?? config.window.defaultWidth,
+      height: options?.height ?? config.window.defaultHeight,
+      minWidth: config.window.minWidth,
+      minHeight: config.window.minHeight,
+      center: config.window.center,
       show: false,
-      devTools: options?.devTools || false,
+      devTools: options?.devTools ?? config.window.devTools,
     });
 
     this.logger.info('window', 'Main window created', {

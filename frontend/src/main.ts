@@ -47,19 +47,35 @@ try {
   })
     .then(appRef => {
       if (!globalWindow[globalFlag]) {
-        window.addEventListener('error', event => {
+        const logToMain = (message: string, error?: Error) => {
+          window.electronAPI?.log({
+            level: 'error',
+            namespace: 'renderer',
+            message,
+            error: error
+              ? { name: error.name, message: error.message, stack: error.stack }
+              : undefined,
+            context: { source: 'window' },
+          });
+        };
+
+        window.addEventListener('error', (event) => {
           event.preventDefault();
           const errorService = appRef.injector.get(GlobalErrorService);
           errorService.report(event.error ?? event.message, { source: 'window' });
+          logToMain(event.message, event.error ?? undefined);
         });
 
-        window.addEventListener('unhandledrejection', event => {
+        window.addEventListener('unhandledrejection', (event) => {
           event.preventDefault();
           const errorService = appRef.injector.get(GlobalErrorService);
           errorService.report(event.reason, {
             source: 'promise',
             title: 'Unhandled Promise Rejection',
           });
+          const error =
+            event.reason instanceof Error ? event.reason : new Error(String(event.reason));
+          logToMain(error.message, error);
         });
 
         globalWindow[globalFlag] = true;

@@ -6,9 +6,20 @@ Installation and setup guide for Electron Angular Rspack Starter.
 
 Before installing, ensure you have the following:
 
-- Node.js 18.0 or higher
-- Bun 1.0 or higher (recommended) or npm 9.0+
-- Git
+### Required Software
+
+| Software | Version | Purpose |
+|----------|---------|---------|
+| Node.js | 18.0+ | JavaScript runtime |
+| Bun | 1.0+ | Package manager (recommended) |
+| Git | Latest | Version control |
+
+### Optional Software
+
+| Software | Purpose |
+|----------|---------|
+| npm | Alternative package manager |
+| yarn | Alternative package manager |
 
 ## Installation
 
@@ -21,11 +32,15 @@ cd starter-electron-angular-rspack
 
 ### Step 2: Install Dependencies
 
-```bash
-# Install root dependencies
-bun install
+Install root dependencies:
 
-# Install frontend dependencies
+```bash
+bun install
+```
+
+Install frontend dependencies:
+
+```bash
 cd frontend
 bun install
 cd ..
@@ -33,9 +48,16 @@ cd ..
 
 ### Step 3: Verify Installation
 
+Run the dependency check:
+
 ```bash
 ./run.sh check
 ```
+
+This verifies:
+- Backend dependencies are installed
+- Frontend dependencies are installed
+- All required packages are present
 
 ## Development
 
@@ -46,16 +68,25 @@ cd ..
 ```
 
 This command:
-1. Starts the Angular dev server
-2. Builds the main process with watch mode
-3. Launches the Electron application
-4. Enables hot module replacement
+1. Checks and installs dependencies if missing
+2. Starts Angular dev server with hot module replacement
+3. Builds the main process with watch mode
+4. Launches the Electron application
+5. Enables automatic reloading on changes
 
 ### Development Workflow
 
 1. Make changes to your code
 2. Changes reload automatically (HMR)
 3. View changes in the Electron window
+4. Use DevTools for debugging
+
+### Access DevTools
+
+The application includes built-in DevTools:
+- Press `Ctrl+Shift+I` (or `Cmd+Option+I` on macOS)
+- Navigate to `/devtools` route
+- Use the DevTools component to monitor IPC and events
 
 ## Building
 
@@ -77,9 +108,11 @@ This command:
 ./run.sh dist
 ```
 
+This creates distributable packages in the `release/` directory.
+
 ## Project Setup
 
-### Update Application Info
+### Update Application Information
 
 Edit `package.json`:
 
@@ -88,11 +121,12 @@ Edit `package.json`:
   "name": "your-app-name",
   "productName": "Your App Name",
   "version": "1.0.0",
-  "author": "Your Name"
+  "author": "Your Name",
+  "description": "Your app description"
 }
 ```
 
-### Update Configuration
+### Update Main Process Configuration
 
 Edit `src/main/app/app.config.ts`:
 
@@ -101,67 +135,271 @@ export const DEFAULT_CONFIG: AppConfig = {
   name: 'Your App',
   version: '1.0.0',
   environment: 'development',
-  // ... other config
+  // Add your configuration options
 };
 ```
 
-### Update Frontend Config
+### Update Frontend Environment
 
 Edit `frontend/src/environments/environment.ts`:
 
 ```typescript
 export const environment = {
   production: false,
-  // ... other config
+  logging: {
+    level: 'debug',
+    enabled: true,
+  },
+  // Add your environment settings
 };
 ```
 
-### Replace Icons
+For production:
+
+Edit `frontend/src/environments/environment.prod.ts`:
+
+```typescript
+export const environment = {
+  production: true,
+  logging: {
+    level: 'error',
+    enabled: true,
+  },
+};
+```
+
+### Replace Icons and Assets
 
 Replace files in `src/assets/`:
 
-- `favicon.ico` - Browser favicon
-- `icon.ico` - Windows icon
-- `icon.png` - PNG icon
-- `icon.svg` - SVG icon
-- `logo.svg` - Application logo
+| File | Purpose |
+|------|---------|
+| favicon.ico | Browser favicon |
+| icon.ico | Windows icon |
+| icon.png | PNG icon |
+| icon.svg | SVG icon |
+| logo.svg | Application logo |
+
+### Update Build Configuration
+
+Edit `package.json` for Electron Builder:
+
+```json
+{
+  "build": {
+    "appId": "com.yourcompany.yourapp",
+    "productName": "Your App Name",
+    "directories": {
+      "output": "release"
+    }
+  }
+}
+```
+
+## Project Configuration
+
+### Runtime Configuration
+
+Configuration files are stored in the `config/` directory:
+
+```
+config/
+├── app-config.json       # Application configuration
+└── user-settings.json    # User-specific settings
+```
+
+### Environment Variables
+
+Create a `.env` file in the project root for environment variables:
+
+```
+API_URL=https://api.example.com
+DEBUG=true
+```
+
+## Code Quality Setup
+
+### Formatting
+
+Format all code:
+
+```bash
+bun run format
+```
+
+Check formatting:
+
+```bash
+bun run format-check
+```
+
+### Linting
+
+Run linting:
+
+```bash
+bun run lint
+```
+
+Check linting:
+
+```bash
+bun run lint-check
+```
+
+### Type Checking
+
+Run type check:
+
+```bash
+bun run type-check
+```
+
+Strict type check:
+
+```bash
+bun run type-check:strict
+```
+
+## Testing Setup
+
+### Run Tests
+
+Run all tests:
+
+```bash
+bun run test
+```
+
+### Run Specific Test Suites
+
+Unit tests:
+
+```bash
+bun run test:unit
+```
+
+Security tests:
+
+```bash
+bun run test:security
+```
+
+### Test Coverage
+
+Generate coverage report:
+
+```bash
+bun run test:coverage
+```
+
+View HTML report:
+
+```bash
+open coverage/index.html
+```
 
 ## Next Steps
 
-1. Review Project Structure
-2. Read Architecture
-3. Check Development Guide
+After setup:
+
+1. Review [Project Structure](project-structure.md) for file organization
+2. Read [Architecture](architecture.md) to understand system design
+3. Check [Development Guide](development.md) for development workflow
 4. Start building your features
 
 ## Troubleshooting
 
-### Issue: Dependencies not installing
+### Dependencies Not Installing
+
+Clear cache and reinstall:
 
 ```bash
-# Clear cache and reinstall
+./run.sh reinstall
+```
+
+Or manually:
+
+```bash
 rm -rf node_modules bun.lock
+rm -rf frontend/node_modules frontend/bun.lock
 bun install
+cd frontend && bun install && cd ..
 ```
 
-### Issue: Dev server not starting
+### Dev Server Not Starting
+
+Check dependencies:
 
 ```bash
-# Check dependencies
 ./run.sh check
 ```
 
-### Issue: Build fails
+Clear Angular cache:
 
 ```bash
-# Run type check
-./run.sh check
+rm -rf frontend/.angular/cache
+```
 
-# Run linting
+### Build Fails
+
+Run type check:
+
+```bash
+bun run type-check
+```
+
+Run linting:
+
+```bash
 bun run lint
+```
+
+Clean and rebuild:
+
+```bash
+./run.sh clean
+./run.sh build
+```
+
+### Application Window Is Blank
+
+1. Open DevTools to check for errors
+2. Verify frontend build exists: `ls frontend/dist/browser/`
+3. Verify main.cjs is built: `ls main.cjs`
+4. Check console for error messages
+
+### Hot Reload Not Working
+
+1. Ensure file is saved
+2. Verify HMR is enabled in configuration
+3. Restart dev server: `./run.sh dev`
+
+### TypeScript Errors
+
+Fix reported errors:
+
+```bash
+bun run type-check
+```
+
+Run strict check for all errors:
+
+```bash
+bun run type-check:strict
 ```
 
 ## Additional Resources
 
-- Scripts Reference - All available commands
-- Configuration - Configuration options
-- Troubleshooting - Common issues
+- [Scripts Reference](scripts-reference.md) - All available commands
+- [Development Guide](development.md) - Development workflow
+- [Troubleshooting](troubleshooting.md) - Common issues
+
+## Support
+
+For additional help:
+
+1. Check [Troubleshooting](troubleshooting.md) guide
+2. Review [FAQ](faq.md)
+3. Search existing [documentation](index.md)
+4. Open an issue on GitHub

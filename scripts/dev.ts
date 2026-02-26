@@ -128,6 +128,11 @@ async function startDev(): Promise<void> {
       await new Promise(resolve => setTimeout(resolve, 15000));
       logger.success('Angular server ready');
 
+      // Build main process bundle so changes take effect in dev
+      logger.start('Main process build');
+      exec(`${RSPACK_BIN} build`, { stdio: 'inherit' });
+      logger.success('Main process build complete');
+
       // Set Electron start URL
       process.env.ELECTRON_START_URL = `http://localhost:${port}`;
 

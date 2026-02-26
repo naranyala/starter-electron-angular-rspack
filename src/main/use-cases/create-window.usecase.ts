@@ -1,5 +1,5 @@
 import { BrowserWindow } from 'electron';
-import type { MainUseCase } from './base-main-usecase.js';
+import type { MainUseCase } from './base-main-usecase';
 
 export interface CreateWindowUseCaseData {
   id: string;
@@ -22,7 +22,7 @@ export class CreateWindowUseCase implements MainUseCase<CreateWindowUseCaseData>
           webPreferences: {
             nodeIntegration: false,
             contextIsolation: true,
-            preload: __dirname + '/preload.js',
+            preload: __dirname + '/preload',
           },
         });
 

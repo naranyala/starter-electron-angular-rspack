@@ -1,12 +1,23 @@
 {
-  "$schema": "https://biomejs.dev/schemas/2.3.13/schema.json",
+  "$schema": "https://biomejs.dev/schemas/2.4.4/schema.json",
   "vcs": {
-    "enabled": false,
+    "enabled": true,
     "clientKind": "git"
   },
   "files": {
     "ignoreUnknown": false,
-    "maxSize": 1048576
+    "maxSize": 1048576,
+    "experimentalScannerIgnores": [
+      "**/node_modules/**",
+      "**/dist/**",
+      "**/build/**",
+      "**/coverage/**",
+      "**/.angular/**",
+      "**/.cache/**",
+      "**/release/**",
+      "**/main.cjs",
+      "**/main.cjs.map"
+    ]
   },
   "formatter": {
     "enabled": true,

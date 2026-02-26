@@ -3,14 +3,14 @@
  * Type-safe contracts for IPC communication between main and renderer
  */
 
-import type { LogLevel, LogEntry } from '../../main/services/logger.service.js';
+import type { AppInfo, LogEntryInput, LogLevel, MessageOptions } from '../types/index.js';
 
 // ═══════════════════════════════════════════════════════════════════════════
 // LOGGING TYPES
 // ═══════════════════════════════════════════════════════════════════════════
 
 export interface LogWriteRequest {
-  entry: LogEntry;
+  entry: LogEntryInput;
 }
 
 export interface LogWriteResponse {
@@ -72,23 +72,12 @@ export interface WindowGetAllResponse {
 // APPLICATION TYPES
 // ═══════════════════════════════════════════════════════════════════════════
 
-export interface AppInfo {
-  name: string;
-  version: string;
-  platform: string;
-  arch: string;
-}
-
 export interface AppGetInfoResponse {
   info: AppInfo;
 }
 
 export interface AppShowMessageRequest {
-  options: {
-    type: 'none' | 'info' | 'warning' | 'error' | 'question';
-    title: string;
-    message: string;
-  };
+  options: MessageOptions;
 }
 
 export interface AppShowMessageResponse {
@@ -196,6 +185,54 @@ export interface ErrorReportRequest {
 export interface ErrorReportResponse {
   success: boolean;
   errorId?: number;
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// DEVTOOLS TYPES
+// ═══════════════════════════════════════════════════════════════════════════
+
+export interface DevtoolsGetStatsResponse {
+  stats: {
+    uptime: number;
+    memory: {
+      rss: number;
+      heapUsed: number;
+      heapTotal: number;
+    };
+    app: {
+      name: string;
+      version: string;
+    };
+    runtime: {
+      node: string;
+      electron: string;
+      chrome: string;
+    };
+    platform: {
+      platform: string;
+      arch: string;
+      pid: number;
+    };
+    windows: {
+      count: number;
+    };
+    eventBus: {
+      totalPublished: number;
+      totalReceived: number;
+      activeSubscriptions: number;
+      historySize: number;
+      avgHandlingTime: number;
+      eventsByChannel: Record<string, number>;
+    };
+  };
+}
+
+export interface DevtoolsGetLogsRequest {
+  limit?: number;
+}
+
+export interface DevtoolsGetLogsResponse {
+  logs: LogEntry[];
 }
 
 export interface ErrorGetHistoryResponse {

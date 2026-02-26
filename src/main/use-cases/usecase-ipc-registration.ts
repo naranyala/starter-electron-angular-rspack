@@ -1,5 +1,5 @@
 import { ipcMain } from 'electron';
-import { MainUseCaseFactory, type UseCaseType } from './index.js';
+import { MainUseCaseFactory, type UseCaseType } from './index';
 
 /**
  * Registers use cases with IPC channels

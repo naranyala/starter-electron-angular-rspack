@@ -19,8 +19,8 @@ import {
   type EventBusStats,
   type TypedEvent,
   type EventSource,
-  IPC_CHANNELS,
-} from '@shared/index.js';
+} from '../../shared/events/types';
+import { IPC_CHANNELS } from '../../shared/ipc/channels';
 
 /**
  * Internal subscription representation
@@ -543,7 +543,7 @@ export class EventBus {
 }
 
 // Import types needed for the implementation
-import type { AllEvents } from './types.js';
+import type { AllEvents } from './types';
 
 /**
  * Singleton event bus instance

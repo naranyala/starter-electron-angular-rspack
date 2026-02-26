@@ -4,16 +4,20 @@ export default defineConfig({
   test: {
     globals: true,
     environment: 'node',
-    include: ['test/security/**/*.test.ts', 'test/security/**/*.bun.ts'],
+    include: [
+      'test/**/*.test.ts',
+      'test/**/*.bun.ts',
+      'frontend/test/**/*.test.ts',
+    ],
     exclude: ['**/node_modules/**', '**/dist/**', '**/.git/**', '**/coverage/**'],
     reporter: ['verbose'],
     coverage: {
       provider: 'v8',
-      enabled: true,
+      enabled: process.env.COVERAGE === '1',
       include: ['src/**/*'],
-      exclude: ['**/node_modules/**', '**/test/**', '**/tests/**'],
+      exclude: ['**/node_modules/**', '**/test/**', '**/tests/**', '**/frontend/**'],
       reporter: ['text', 'lcov', 'html'],
-      reportsDirectory: './coverage/security',
+      reportsDirectory: './coverage',
       thresholds: {
         lines: 80,
         branches: 80,
@@ -21,7 +25,7 @@ export default defineConfig({
         statements: 80,
       },
     },
-    timeout: 30000, // 30 seconds timeout for security tests
+    timeout: 30000,
     retries: 1,
   },
 });

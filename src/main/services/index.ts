@@ -3,12 +3,11 @@ export {
   ipcHandlerService,
 } from './ipc-handler.service';
 export {
-  type LogEntry,
   type LoggerConfig,
   LoggerService,
-  LogLevel,
   loggerService,
 } from './logger.service';
+export { type LogEntry, LogLevel } from '../../shared/types';
 
 export {
   type WindowOptions,

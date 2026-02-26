@@ -1,480 +1,573 @@
 # API Reference
 
+Complete API reference for Electron Angular Rspack Starter.
+
 ## Main Process API
 
-### Configuration Management
+### App Facade
 
-#### ConfigManager
-Manages application configuration with file persistence and change watching.
+Simplified API for main process functionality.
+
+**Location:** `src/main/app/app.facade.ts`
 
 ```typescript
-const configManager = new ConfigManager({
-  fileName: 'app-config.json',
-  watch: true
-});
+import { appFacade } from '@main/app';
 
-// Get configuration value
-const apiUrl = configManager.get('api.url', 'http://localhost:3000');
+// Logging
+appFacade.logger.info('namespace', 'message', data);
+appFacade.logger.error('namespace', 'message', error);
+appFacade.logger.warn('namespace', 'message', data);
+appFacade.logger.debug('namespace', 'message', data);
 
-// Set configuration value
-configManager.set('feature.enabled', true);
+// Window Management
+appFacade.windows.create(options);
+appFacade.windows.close(id);
+appFacade.windows.focus(id);
+appFacade.windows.minimize(id);
+appFacade.windows.maximize(id);
 
-// Watch for configuration changes
-const watcher = configManager.watch();
-const unsubscribe = watcher.onChange((newConfig) => {
-  console.log('Config changed:', newConfig);
-});
+// Events
+appFacade.events.broadcast('channel', payload);
+appFacade.events.alert('channel', payload);
 ```
 
-#### FeatureFlagsManager
-Manages feature flags for A/B testing and gradual rollouts.
+### Dependency Injection Container
+
+DI container for service registration and resolution.
+
+**Location:** `src/main/di/container.ts`
 
 ```typescript
-const featureFlags = new FeatureFlagsManager(configManager);
+import { Injectable, container } from '@main/di';
 
-// Check if feature is enabled
-if (featureFlags.isEnabled('new-ui', userId)) {
-  // Show new UI
+// Register service with decorator
+@Injectable({ scope: 'singleton' })
+export class LoggerService {
+  constructor() {}
 }
 
-// Set a feature flag
-featureFlags.setFlag({
-  name: 'beta-feature',
+// Resolve service
+const logger = container.resolve(LoggerService);
+
+// Register class
+container.registerClass(Token, Class);
+
+// Register factory
+container.register('token', () => ({ value: 'test' }));
+
+// Register value
+container.registerValue('token', 'value');
+```
+
+### Event Bus
+
+Cross-process event communication.
+
+**Location:** `src/main/events/event-bus.ts`
+
+```typescript
+import { events } from '@main/events';
+
+// Subscribe
+events.on('channel', (payload) => {
+  console.log('Event received:', payload);
+});
+
+// Subscribe once
+events.once('channel', (payload) => {
+  console.log('Event received once:', payload);
+});
+
+// Publish (local)
+events.emit('channel', payload);
+
+// Broadcast (cross-process)
+events.broadcast('channel', payload);
+
+// Alert (high priority)
+events.alert('channel', payload);
+
+// Unsubscribe
+const unsubscribe = events.on('channel', handler);
+unsubscribe();
+```
+
+### Error Handler
+
+Error handling with Result types.
+
+**Location:** `src/main/errors/error-handler.ts`
+
+```typescript
+import { ErrorHandler, ErrorCode } from '@main/errors';
+
+@Injectable({ scope: 'singleton' })
+export class MyService {
+  constructor(private errorHandler: ErrorHandler) {}
+
+  async operation(): AsyncResult<Data> {
+    return this.errorHandler.handle(
+      async () => {
+        // Operation that might throw
+        return await this.doSomething();
+      },
+      ErrorCode.OperationFailed,
+      { context: 'data' }
+    );
+  }
+}
+```
+
+### Logger Service
+
+Structured logging service.
+
+**Location:** `src/main/services/logger.service.ts`
+
+```typescript
+import { LoggerService } from '@main/services';
+
+const logger = new LoggerService();
+
+logger.info('namespace', 'message', { data: 'value' });
+logger.error('namespace', 'message', error);
+logger.warn('namespace', 'message', { data: 'value' });
+logger.debug('namespace', 'message', { data: 'value' });
+
+// Get logs
+const logs = logger.getLogs();
+
+// Clear logs
+logger.clear();
+
+// Set log level
+logger.setLevel('debug');
+```
+
+### Window Service
+
+Window management service.
+
+**Location:** `src/main/services/window.service.ts`
+
+```typescript
+import { WindowService } from '@main/services';
+
+const windowService = new WindowService();
+
+// Create window
+const result = await windowService.create({
+  title: 'My Window',
+  width: 800,
+  height: 600,
+});
+
+// Close window
+await windowService.close('window-id');
+
+// Focus window
+await windowService.focus('window-id');
+
+// Minimize window
+await windowService.minimize('window-id');
+
+// Maximize window
+await windowService.maximize('window-id');
+```
+
+## Frontend API
+
+### Event Bus Facade
+
+Frontend event bus facade.
+
+**Location:** `frontend/src/core/events/event-bus.facade.ts`
+
+```typescript
+import { EventBusFacade } from '@core/events';
+
+@Injectable({ providedIn: 'root' })
+export class MyService {
+  constructor(private events: EventBusFacade) {}
+
+  publishEvent() {
+    // Publish local event
+    this.events.emit('channel', payload);
+    
+    // Broadcast to main process
+    this.events.broadcast('channel', payload);
+    
+    // Send to main process
+    this.events.sendToMain('channel', payload);
+  }
+
+  subscribeToEvents() {
+    // Subscribe
+    this.events.on('channel', (payload) => {
+      console.log('Event:', payload);
+    });
+    
+    // Get signal for event count
+    const count = this.events.getSignal('channel');
+    
+    // Get latest payload signal
+    const latest = this.events.getLatest('channel');
+    
+    // Custom selector
+    const selected = this.events.select('channel', (p) => p.value);
+  }
+}
+```
+
+### Error Service
+
+Frontend error handling service.
+
+**Location:** `frontend/src/core/errors/error.service.ts`
+
+```typescript
+import { FrontendErrorService } from '@core/errors';
+
+@Injectable({ providedIn: 'root' })
+export class MyService {
+  constructor(private errorService: FrontendErrorService) {}
+
+  async loadData() {
+    // Handle async error with user message
+    const result = await this.errorService.handleAsync(
+      this.api.getData(),
+      'Failed to load data'
+    );
+    
+    // Handle sync error
+    const value = this.errorService.handle(
+      riskyOperation(),
+      'Operation failed'
+    );
+  }
+}
+```
+
+### Window Facade
+
+Window management facade for frontend.
+
+**Location:** `frontend/src/core/window/window.facade.ts`
+
+```typescript
+import { WindowFacade } from '@core/window';
+
+@Injectable({ providedIn: 'root' })
+export class MyService {
+  constructor(private windowFacade: WindowFacade) {}
+
+  manageWindows() {
+    // Open card in window
+    this.windowFacade.openCard(card, index);
+    
+    // Close window
+    this.windowFacade.close('window-id');
+    
+    // Focus window
+    this.windowFacade.focus('window-id');
+  }
+}
+```
+
+### Logger ViewModel
+
+Frontend logging with signals.
+
+**Location:** `frontend/src/viewmodels/logger.viewmodel.ts`
+
+```typescript
+import { getLogger, backend } from '@viewmodels/logger.viewmodel';
+
+// Configure logging
+configureLogging({
+  level: 'debug',
   enabled: true,
-  rolloutPercentage: 10 // 10% rollout
-});
-```
-
-#### EnvironmentConfig
-Provides environment-specific configuration values.
-
-```typescript
-const env = EnvironmentConfig.getEnvironment(); // 'development' | 'production' | 'test'
-const isDev = EnvironmentConfig.isDevelopment();
-const apiUrl = EnvironmentConfig.getApiBaseUrl();
-```
-
-### IPC Handlers
-
-#### `getSystemInfo`
-Retrieves system information from the main process.
-
-**Request**: No parameters
-**Response**:
-```typescript
-{
-  platform: string;
-  version: string;
-  arch: string;
-}
-```
-
-#### `getFileContent`
-Reads content from a file.
-
-**Request**:
-```typescript
-{
-  filePath: string;
-}
-```
-**Response**:
-```typescript
-{
-  content: string;
-  success: boolean;
-  error?: string;
-}
-```
-
-#### `writeFileContent`
-Writes content to a file.
-
-**Request**:
-```typescript
-{
-  filePath: string;
-  content: string;
-}
-```
-**Response**:
-```typescript
-{
-  success: boolean;
-  error?: string;
-}
-```
-
-### Window Management
-
-#### WindowUseCaseFactory
-Creates window use cases for different features.
-
-```typescript
-const useCase = WindowUseCaseFactory.createUseCase('feature-name');
-useCase.execute(card, index);
-```
-
-### File System Operations
-
-#### FileSystem Class
-Provides safe file operations with error handling.
-
-```typescript
-const fs = new FileSystem();
-await fs.writeFile('config.json', data);
-const content = await fs.readFile('config.json');
-```
-
-## Renderer Process API
-
-### State Management
-
-#### ComponentStateManager
-Manages component state with loading, error, and persistence states.
-
-```typescript
-const stateManager = new ComponentStateManager(initialData, 'my-component');
-
-// Subscribe to state changes
-const unsubscribe = stateManager.subscribe((state) => {
-  console.log('State updated:', state);
 });
 
-// Load data with loading/error handling
-try {
-  const data = await stateManager.loadData(async () => {
-    const response = await fetch('/api/data');
-    return response.json();
-  });
-} catch (error) {
-  console.error('Failed to load data:', error);
-}
+// Enable backend sink
+backend.enableBackendSink();
 
-// Get current state
-const currentState = stateManager.getState();
-```
+// Get logger
+const logger = getLogger('my-component');
 
-#### ReactiveStore
-Reactive state store with persistence and throttling.
+logger.info('Message', { data: 'value' });
+logger.error('Error', error);
 
-```typescript
-const store = new ReactiveStore({
-  count: 0,
-  user: null
-}, {
-  name: 'app-state',
-  persist: true,
-  throttleMs: 100
-});
+// Get log history
+const history = getLogHistory();
 
-// Subscribe to state changes
-const unsubscribe = store.subscribe((state) => {
-  console.log('Store updated:', state);
-});
-
-// Update state
-store.setState({ count: store.getState().count + 1 });
-```
-
-### DOM Utilities
-
-#### DOM.create()
-Creates DOM elements with options.
-
-```typescript
-const element = DOM.create('div', {
-  class: 'container',
-  id: 'main-container',
-  text: 'Hello World',
-  attributes: { 'data-id': '123' }
-});
-```
-
-#### DOM.append()
-Appends child elements to parent.
-
-```typescript
-DOM.append(parentElement, childElement);
-```
-
-#### DOM.remove()
-Removes elements from DOM.
-
-```typescript
-DOM.remove(element);
-```
-
-### Animation System
-
-#### AnimationSequencer
-Advanced animation utilities with sequencing and effects.
-
-```typescript
-const sequencer = new AnimationSequencer();
-
-// Play animation sequence
-await sequencer.playSequence([
-  {
-    element: element1,
-    keyframes: [{ opacity: 0 }, { opacity: 1 }],
-    options: { duration: 300 }
-  },
-  {
-    element: element2,
-    keyframes: [{ transform: 'translateY(100%)' }, { transform: 'translateY(0)' }],
-    options: { duration: 500 }
-  }
-]);
-
-// Individual animations
-await sequencer.fadeIn(element);
-await sequencer.slideIn(element, 'up');
-```
-
-#### Animations.fadeIn()
-Fade in an element.
-
-```typescript
-await Animations.fadeIn(element, duration);
-```
-
-#### Animations.fadeOut()
-Fade out an element.
-
-```typescript
-await Animations.fadeOut(element, duration);
-```
-
-### Virtual Scrolling
-
-#### VirtualScroller
-Performance-optimized virtual scrolling for large lists.
-
-```typescript
-const virtualScroller = new VirtualScroller(containerElement, {
-  itemHeight: 50,
-  containerHeight: 400
-});
-
-// Update with new items
-virtualScroller.update(items);
-```
-
-### Form Utilities
-
-#### FormBuilder
-Advanced form builder with validation and persistence.
-
-```typescript
-const formBuilder = new FormBuilder({
-  fields: [
-    {
-      name: 'email',
-      required: true,
-      validators: [FormValidators.email()]
-    },
-    {
-      name: 'password',
-      required: true,
-      validators: [FormValidators.minLength(8)]
-    }
-  ],
-  validateOn: 'blur',
-  onSubmit: async (data) => {
-    console.log('Form submitted:', data);
-  }
-});
-
-// Set field value
-await formBuilder.setValue('email', 'user@example.com');
-
-// Validate all fields
-const isValid = await formBuilder.validateAll();
-
-// Submit form
-const success = await formBuilder.submit();
-```
-
-#### FormValidators
-Predefined validation rules.
-
-```typescript
-const emailRule = FormValidators.email('Please enter a valid email');
-const requiredRule = FormValidators.required('This field is required');
-const minLengthRule = FormValidators.minLength(8, 'Must be at least 8 characters');
-```
-
-#### FormTransformers
-Data transformation utilities.
-
-```typescript
-const trimmedValue = FormTransformers.trim(inputValue);
-const lowerValue = FormTransformers.toLowerCase(inputValue);
-```
-
-### Storage Utilities
-
-#### Storage.set()
-Set a value in local storage.
-
-```typescript
-Storage.set('key', 'value');
-```
-
-#### Storage.get()
-Get a value from local storage.
-
-```typescript
-const value = Storage.get('key', 'defaultValue');
-```
-
-#### Storage.remove()
-Remove a value from local storage.
-
-```typescript
-Storage.remove('key');
-```
-
-### Accessibility Utilities
-
-#### AccessibilityManager
-Utilities for improving accessibility.
-
-```typescript
-// Make element keyboard accessible
-AccessibilityManager.makeKeyboardAccessible(buttonElement, () => {
-  console.log('Button clicked');
-});
-
-// Announce message to screen readers
-AccessibilityManager.announce('Item deleted successfully');
-
-// Trap focus within modal
-const untrap = AccessibilityManager.trapFocus(modalElement);
-```
-
-## IPC Client API
-
-### window.electronAPI.invoke()
-Invoke an IPC handler from renderer.
-
-```typescript
-const result = await window.electronAPI.invoke('handler-name', params);
-```
-
-### window.electronAPI.send()
-Send a message to main process without waiting for response.
-
-```typescript
-window.electronAPI.send('channel-name', data);
-```
-
-### window.electronAPI.on()
-Listen for messages from main process.
-
-```typescript
-window.electronAPI.on('channel-name', (event, data) => {
-  console.log(data);
-});
-```
-
-## Configuration API
-
-### Config Management
-
-#### Main Process Config
-Located in `/src/main/config.ts`
-
-```typescript
-import { getConfig } from './config';
-const config = getConfig();
-```
-
-#### Renderer Process Config
-Located in `/src/renderer/config/`
-
-```typescript
-import { appConfig } from './config';
-const config = appConfig;
-```
-
-## Utility Functions
-
-### Logger
-Structured logging utility.
-
-```typescript
-import { logger } from './lib/logger';
-logger.info('Message', { metadata });
-logger.error('Error message', error);
-```
-
-### Type Guards
-Runtime type checking utilities.
-
-```typescript
-import { isString, isObject } from './utils/type-guards';
-if (isString(value)) {
-  // value is definitely a string
-}
-```
-
-### Async Utilities
-Helper functions for asynchronous operations.
-
-```typescript
-import { delay, retry } from './utils/async';
-await delay(1000); // Wait 1 second
-const result = await retry(asyncFn, 3); // Retry up to 3 times
-```
-
-## Platform-Specific APIs
-
-### Platform Detection
-Detect the current platform.
-
-```typescript
-import { isWindows, isMac, isLinux } from './platform/detection';
-if (isMac()) {
-  // Mac-specific code
-}
-```
-
-### Native Dialogs
-Platform-native dialog utilities.
-
-```typescript
-import { showOpenDialog, showSaveDialog } from './platform/dialogs';
-const result = await showOpenDialog({
-  filters: [{ name: 'Text Files', extensions: ['txt'] }]
-});
+// Clear logs
+clearLogHistory();
 ```
 
 ## Shared Types
 
-### Common Interfaces
-Defined in `/src/shared/types/`
+### Result Types
+
+Type-safe error handling types.
+
+**Location:** `src/shared/errors/result.ts`
 
 ```typescript
-import { WindowOptions, FileData, SystemInfo } from '../shared/types';
+import { Result, Ok, Err, AsyncResult } from '@shared/errors';
+
+// Result type
+type Result<T, E = ErrorValue> = Ok<T> | Err<E>;
+
+// Async result
+type AsyncResult<T, E = ErrorValue> = Promise<Result<T, E>>;
+
+// Create success
+const success = ok(data);
+
+// Create error
+const error = errFromCode(ErrorCode.ResourceNotFound, 'Not found');
+
+// Check result
+if (isOk(result)) {
+  console.log(result.value);
+}
+
+if (isErr(result)) {
+  console.error(result.error);
+}
+
+// Transform
+const mapped = map(result, (v) => v.toUpperCase());
+const chained = await result.andThen(v => nextOperation(v));
+
+// Extract
+const value = unwrapOr(result, 'default');
+const nullValue = toNull(result);
 ```
 
-## Advanced Shared Utilities
+### Error Codes
 
-### State Management
+Predefined error codes.
 
-#### ReactiveStore
-Reactive state management with persistence and throttling.
+**Location:** `src/shared/errors/error-codes.ts`
 
 ```typescript
-import { ReactiveStore } from '../shared/lib/utils';
+import { ErrorCode } from '@shared/errors';
+
+// General errors
+ErrorCode.Ok = 0
+ErrorCode.InternalError = 1
+ErrorCode.NotImplemented = 2
+
+// Validation errors
+ErrorCode.ValidationFailed = 100
+ErrorCode.InvalidInput = 101
+ErrorCode.MissingRequired = 102
+
+// Authentication errors
+ErrorCode.AuthenticationRequired = 200
+ErrorCode.AuthenticationFailed = 201
+ErrorCode.PermissionDenied = 203
+
+// Resource errors
+ErrorCode.ResourceNotFound = 300
+ErrorCode.ResourceExists = 301
+
+// Database errors
+ErrorCode.DatabaseError = 400
+ErrorCode.QueryFailed = 401
+
+// Network errors
+ErrorCode.NetworkError = 600
+ErrorCode.Timeout = 601
+
+// IPC errors
+ErrorCode.IPCError = 700
+ErrorCode.ChannelNotFound = 701
+
+// Window errors
+ErrorCode.WindowError = 800
+ErrorCode.WindowCreateFailed = 801
+```
+
+### IPC Channels
+
+IPC channel definitions.
+
+**Location:** `src/shared/ipc/channels.ts`
+
+```typescript
+import { IPC_CHANNELS } from '@shared/ipc';
+
+// Log channels
+IPC_CHANNELS.LOG.WRITE
+IPC_CHANNELS.LOG.GET_LEVEL
+IPC_CHANNELS.LOG.CLEAR
+
+// Window channels
+IPC_CHANNELS.WINDOW.CREATE
+IPC_CHANNELS.WINDOW.CLOSE
+IPC_CHANNELS.WINDOW.FOCUS
+IPC_CHANNELS.WINDOW.MINIMIZE
+IPC_CHANNELS.WINDOW.MAXIMIZE
+
+// App channels
+IPC_CHANNELS.APP.INFO
+IPC_CHANNELS.APP.QUIT
+IPC_CHANNELS.APP.RESTART
+
+// Event channels
+IPC_CHANNELS.EVENT.PUBLISH
+IPC_CHANNELS.EVENT.SUBSCRIBE
+
+// Data channels
+IPC_CHANNELS.DATA.GET
+IPC_CHANNELS.DATA.SET
+IPC_CHANNELS.DATA.DELETE
+```
+
+### Event Types
+
+Event type definitions.
+
+**Location:** `src/shared/events/types.ts`
+
+```typescript
+import { EventTypes } from '@shared/events';
+
+// App events
+EventTypes.APP_READY = 'app:ready'
+EventTypes.APP_SHUTDOWN = 'app:shutdown'
+EventTypes.APP_MINIMIZE = 'app:minimize'
+EventTypes.APP_MAXIMIZE = 'app:maximize'
+
+// Window events
+EventTypes.WINDOW_CREATED = 'window:created'
+EventTypes.WINDOW_CLOSED = 'window:closed'
+EventTypes.WINDOW_FOCUSED = 'window:focused'
+EventTypes.WINDOW_BOUNDS_CHANGED = 'window:bounds-changed'
+
+// Log events
+EventTypes.LOG_ENTRY = 'log:entry'
+EventTypes.LOG_LEVEL_CHANGE = 'log:level-change'
+
+// Error events
+EventTypes.ERROR_OCCURRED = 'error:occurred'
+EventTypes.ERROR_RECOVERED = 'error:recovered'
+```
+
+## Utility Functions
+
+### Logger Utility
+
+Structured logging utility.
+
+**Location:** `src/shared/lib/utils/logger.ts`
+
+```typescript
+import { logger } from '@shared/lib/logger';
+
+logger.info('Message', { metadata });
+logger.error('Error message', error);
+logger.warn('Warning', { data });
+logger.debug('Debug info', { details });
+```
+
+### Async Utilities
+
+Helper functions for asynchronous operations.
+
+**Location:** `src/shared/lib/utils/async.ts`
+
+```typescript
+import { delay, retry, tryAsync } from '@shared/lib/utils';
+
+// Delay execution
+await delay(1000); // Wait 1 second
+
+// Retry operation
+const result = await retry(
+  async () => await fetch('/api/data'),
+  { maxAttempts: 3, baseDelay: 1000 }
+);
+
+// Try async with Result
+const result = await tryAsync(async () => {
+  return await riskyOperation();
+});
+```
+
+### Type Guards
+
+Runtime type checking utilities.
+
+**Location:** `src/shared/lib/utils/type-guards.ts`
+
+```typescript
+import { isString, isObject, isNumber, isArray } from '@shared/lib/utils';
+
+if (isString(value)) {
+  // value is definitely a string
+  console.log(value.toUpperCase());
+}
+
+if (isObject(value)) {
+  // value is definitely an object
+  console.log(value.key);
+}
+
+if (isNumber(value)) {
+  // value is definitely a number
+  console.log(value.toFixed(2));
+}
+
+if (isArray(value)) {
+  // value is definitely an array
+  console.log(value.length);
+}
+```
+
+### Platform Utilities
+
+Platform detection and utilities.
+
+**Location:** `src/shared/lib/utils/platform.ts`
+
+```typescript
+import { isWindows, isMac, isLinux, getPlatform } from '@shared/lib/utils';
+
+if (isWindows()) {
+  // Windows-specific code
+}
+
+if (isMac()) {
+  // macOS-specific code
+}
+
+if (isLinux()) {
+  // Linux-specific code
+}
+
+const platform = getPlatform();
+```
+
+## Advanced Utilities
+
+### Reactive Store
+
+Reactive state management.
+
+**Location:** `src/shared/lib/utils/store.ts`
+
+```typescript
+import { ReactiveStore } from '@shared/lib/utils';
 
 const store = new ReactiveStore({
   count: 0,
   user: null
 }, {
-  name: 'counter-store',
+  name: 'app-store',
   persist: true,
   throttleMs: 100
 });
@@ -486,99 +579,72 @@ const unsubscribe = store.subscribe((state) => {
 
 // Update state
 store.setState({ count: 1 });
+
+// Get state
+const currentState = store.getState();
 ```
 
-### Caching
+### Advanced Cache
 
-#### AdvancedCache
-Advanced caching with TTL, size limits, and revalidation.
+Caching with TTL and size limits.
+
+**Location:** `src/shared/lib/utils/cache.ts`
 
 ```typescript
-import { AdvancedCache } from '../shared/lib/utils';
+import { AdvancedCache } from '@shared/lib/utils';
 
 const cache = new AdvancedCache({
   maxSize: 100,
   maxAge: 300000 // 5 minutes
 });
 
-// Set value with TTL
-await cache.set('key', 'value', { maxAge: 60000 }); // 1 minute
+// Set value
+await cache.set('key', 'value', { maxAge: 60000 });
 
 // Get value
 const value = await cache.get('key');
 
-// Get or set with factory function
-const result = await cache.getOrSet('expensive-key', async () => {
+// Get or set
+const result = await cache.getOrSet('key', async () => {
   return await expensiveOperation();
 });
+
+// Delete value
+await cache.delete('key');
+
+// Clear cache
+await cache.clear();
 ```
 
-### Form Utilities
+### Rate Limiter
 
-#### FormBuilder
-Advanced form building and validation (shared between processes).
+Rate limiting for operations.
+
+**Location:** `src/shared/lib/utils/rate-limiter.ts`
 
 ```typescript
-import { FormBuilder, FormValidators } from '../shared/lib/utils';
+import { RateLimiter } from '@shared/lib/utils';
 
-const formBuilder = new FormBuilder({
-  fields: [
-    {
-      name: 'email',
-      required: true,
-      validators: [FormValidators.email()]
-    }
-  ]
-});
+const limiter = new RateLimiter(10, 1000); // 10 calls per second
+
+if (limiter.isAllowed()) {
+  // Make API call
+  await apiCall();
+} else {
+  // Wait for available slot
+  await limiter.waitForAvailable();
+  await apiCall();
+}
 ```
 
-### Network Utilities
+### Memoization
 
-#### AdvancedHttpClient
-HTTP client with caching, retries, and interceptors.
+Function memoization.
 
-```typescript
-import { AdvancedHttpClient } from '../shared/lib/utils';
-
-const httpClient = new AdvancedHttpClient({
-  baseUrl: 'https://api.example.com',
-  timeout: 10000,
-  retries: 3
-});
-
-// Make request with caching
-const response = await httpClient.get('/users');
-
-// POST request
-const postResponse = await httpClient.post('/users', { name: 'John' });
-```
-
-#### WebSocketClient
-WebSocket client with auto-reconnection and heartbeats.
+**Location:** `src/shared/lib/utils/memoize.ts`
 
 ```typescript
-import { WebSocketClient } from '../shared/lib/utils';
-
-const wsClient = new WebSocketClient('ws://localhost:8080');
-
-wsClient.on('open', () => {
-  console.log('Connected');
-});
-
-wsClient.onMessage('user-update', (data) => {
-  console.log('User updated:', data);
-});
-
-wsClient.connect();
-```
-
-### Utility Functions
-
-#### memoize
-Function memoization for expensive operations.
-
-```typescript
-import { memoize } from '../shared/lib/utils';
+import { memoize } from '@shared/lib/utils';
 
 const expensiveFunction = (a: number, b: number) => {
   // Expensive computation
@@ -586,56 +652,33 @@ const expensiveFunction = (a: number, b: number) => {
 };
 
 const memoizedFunction = memoize(expensiveFunction);
-```
 
-#### retry
-Retry mechanism with exponential backoff.
+// First call - computes
+memoizedFunction(1, 2);
 
-```typescript
-import { retry } from '../shared/lib/utils';
-
-const result = await retry(async () => {
-  // Operation that might fail
-  const response = await fetch('/api/data');
-  if (!response.ok) throw new Error('Failed to fetch');
-  return response.json();
-}, {
-  maxAttempts: 3,
-  baseDelay: 1000
-});
-```
-
-#### RateLimiter
-Rate limiting for API calls.
-
-```typescript
-import { RateLimiter } from '../shared/lib/utils';
-
-const limiter = new RateLimiter(10, 1000); // 10 calls per second
-
-if (limiter.isAllowed()) {
-  // Make API call
-} else {
-  await limiter.waitForAvailable();
-  // Make API call
-}
+// Second call - returns cached result
+memoizedFunction(1, 2);
 ```
 
 ## Error Handling
 
 ### Custom Errors
+
 Application-specific error types.
 
 ```typescript
-import { FileNotFoundError, PermissionError } from './errors';
+import { FileNotFoundError, PermissionError } from '@shared/errors';
+
 throw new FileNotFoundError(filePath);
+throw new PermissionDeniedError(operation);
 ```
 
-### Error Boundaries
-Component-level error handling with graceful degradation.
+### Error Boundary
+
+Component-level error handling.
 
 ```typescript
-import { ErrorBoundary } from '../shared/lib/utils';
+import { ErrorBoundary } from '@shared/lib/utils';
 
 const boundary = new ErrorBoundary({
   handleError: (error, context) => {
@@ -648,10 +691,17 @@ const boundary = new ErrorBoundary({
 
 try {
   const result = await boundary.execute(async () => {
-    // Risky operation
     return await riskyOperation();
   }, 'risky-operation');
 } catch (error) {
   // Handle error
 }
 ```
+
+## Related Documentation
+
+- [Architecture](architecture.md) - System design
+- [Dependency Injection](dependency-injection.md) - DI system
+- [Event Bus](event-bus.md) - Event communication
+- [Errors as Values](errors-as-values.md) - Error handling pattern
+- [IPC Communication](ipc-communication.md) - IPC patterns
